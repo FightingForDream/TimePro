@@ -2,6 +2,9 @@ package com.atguigu.time;
 
 import android.app.Application;
 
+import com.atguigu.time.service.WriteLog;
+import com.baidu.mapapi.SDKInitializer;
+
 import org.xutils.x;
 
 /**
@@ -14,5 +17,8 @@ public class MyApplication extends Application {
         super.onCreate();
         x.Ext.init(this);
         x.isDebug();
+
+        WriteLog.getInstance().init(); // 初始化日志
+        SDKInitializer.initialize(getApplicationContext());
     }
 }
