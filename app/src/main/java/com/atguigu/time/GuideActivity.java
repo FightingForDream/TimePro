@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.atguigu.time.adapter.GuideAdapter;
+import com.atguigu.time.bean.City;
 import com.atguigu.time.utils.CacheUtils;
 
 public class GuideActivity extends Activity {
@@ -25,6 +26,8 @@ public class GuideActivity extends Activity {
 
     public static final String GuideActivity_IsShow = "1";
 
+    private City city;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,7 @@ public class GuideActivity extends Activity {
     }
 
     private void initData() {
+        city = (City) getIntent().getSerializableExtra("City");
         vp_guide.setAdapter(new GuideAdapter(this, drawableIds, bottomViewIds));
 
         vp_guide.addOnPageChangeListener(new MyPagerChangerListener());
@@ -42,6 +46,7 @@ public class GuideActivity extends Activity {
             public void onClick(View v) {
                 CacheUtils.putBoolean(GuideActivity.this, GuideActivity_IsShow, true);
                 Intent intent = new Intent(GuideActivity.this, MainActivity.class);
+                intent.putExtra("City",city);
                 startActivity(intent);
                 finish();
             }

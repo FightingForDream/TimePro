@@ -2,6 +2,7 @@ package com.atguigu.time;
 
 import android.app.Activity;
 import android.app.Service;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.RelativeLayout;
 import com.atguigu.time.api.Url;
 import com.atguigu.time.bean.City;
 import com.atguigu.time.service.LocationService;
+import com.atguigu.time.utils.CacheUtils;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.google.gson.Gson;
@@ -57,9 +59,18 @@ public class SplashActivity extends Activity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
-
-
+                boolean isShow = CacheUtils.getBoolean(SplashActivity.this, GuideActivity.GuideActivity_IsShow);
+                if (isShow) {
+                    //曾经进入过主页面
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    intent.putExtra("City",city);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(SplashActivity.this, GuideActivity.class);
+                    intent.putExtra("City",city);
+                    startActivity(intent);
+                }
+                finish();
             }
 
             @Override
@@ -72,7 +83,7 @@ public class SplashActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
+        //获取locationService实例，建议应用中只始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
         locationService.registerListener(mListener);
         //注册监听
         int type = getIntent().getIntExtra("from", 0);

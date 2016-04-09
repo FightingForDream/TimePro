@@ -12,7 +12,49 @@
             android:id="@+id/vp_mall"
             android:layout_width="match_parent"
             android:layout_height="150dp"/>
-
     </RelativeLayout>
+
+    <RadioGroup
+        android:id="@+id/rg_home_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_home_movie"
+            style="@style/radio_button_style"
+            android:drawableTop="@drawable/relation_icon_05"
+            android:text="玩具"
+            android:textColor="@android:color/darker_gray" />
+
+        <RadioButton
+            android:id="@+id/rb_home_teleplay"
+            style="@style/radio_button_style"
+            android:drawableTop="@drawable/relation_icon_05"
+            android:text="电视剧"
+            android:textColor="@android:color/darker_gray" />
+
+        <RadioButton
+            android:id="@+id/rb_home_variety"
+            style="@style/radio_button_style"
+            android:drawableTop="@drawable/relation_icon_05"
+            android:text="综艺"
+            android:textColor="@android:color/darker_gray" />
+
+        <RadioButton
+            android:id="@+id/rb_home_anime"
+            style="@style/radio_button_style"
+            android:drawableTop="@drawable/relation_icon_05"
+            android:text="动漫"
+            android:textColor="@android:color/darker_gray" />
+
+        <RadioButton
+            android:id="@+id/rb_home_zhibo"
+            style="@style/radio_button_style"
+            android:drawableTop="@drawable/relation_icon_05"
+            android:text="直播"
+            android:textColor="@android:color/darker_gray" />
+    </RadioGroup>
+
 
 </LinearLayout>
