@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import com.atguigu.time.base.BasePager;
+import com.atguigu.time.bean.City;
 import com.atguigu.time.pager.FindPager;
 import com.atguigu.time.pager.HomePager;
 import com.atguigu.time.pager.MinePager;
@@ -34,12 +35,16 @@ public class MainActivity extends FragmentActivity {
     private RadioGroup rg_main;
 
     private int mPosition;
+    public int cityId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         x.view().inject(this);
+
+        City city = (City) getIntent().getSerializableExtra("City");//从闪屏页获取到城市id
+        cityId = city.getCityId();
         initData();
     }
 
