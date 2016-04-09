@@ -58,10 +58,8 @@ public class SplashActivity extends Activity {
             @Override
             public void onAnimationEnd(Animation animation) {
 
-             /*   Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                intent.putExtra("City", city);
-                startActivity(intent);
-                finish();*/
+
+
             }
 
             @Override
