@@ -44,6 +44,7 @@ public class MainActivity extends FragmentActivity {
     }
 
 
+    //初始化数据
     private void initData() {
         mPagers = new ArrayList<>();
         mPagers.add(new HomePager(this));
