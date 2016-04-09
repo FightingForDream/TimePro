@@ -17,7 +17,7 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <application
-        android:name=".MyApplacation"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -40,9 +40,13 @@
                 <action android:name="com.baidu.location.service_v2.2" />
             </intent-filter>
         </service>
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="TxhDa0F6Z5hF2n5mM7w1HQW5FRTZPIjK" />
+
+        <activity android:name=".activity.CityList"/>
+        <activity android:name=".GuideActivity"/>
     </application>
 
 </manifest>

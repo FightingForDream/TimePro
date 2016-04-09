@@ -24,7 +24,6 @@
         android:paddingBottom="3dp"
         android:paddingTop="7dp">
 
-
         <RadioButton
             android:id="@+id/rb_home"
             style="@style/tabBottom"

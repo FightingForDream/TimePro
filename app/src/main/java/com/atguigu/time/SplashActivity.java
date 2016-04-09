@@ -14,6 +14,7 @@ import com.atguigu.time.api.Url;
 import com.atguigu.time.bean.City;
 import com.atguigu.time.service.LocationService;
 import com.atguigu.time.utils.CacheUtils;
+import com.atguigu.time.utils.SpUtils;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.google.gson.Gson;
@@ -111,6 +112,7 @@ public class SplashActivity extends Activity {
                 @Override
                 public void onSuccess(String result) {
                     city = new Gson().fromJson(result, City.class);
+                    SpUtils.getInstance(SplashActivity.this).save("City", city.getCityId());
                     Log.e("TAG", city.toString());
                 }
 

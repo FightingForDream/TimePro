@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +16,12 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import com.atguigu.time.base.BasePager;
-import com.atguigu.time.bean.City;
 import com.atguigu.time.pager.FindPager;
 import com.atguigu.time.pager.HomePager;
 import com.atguigu.time.pager.MinePager;
 import com.atguigu.time.pager.ShopPager;
 import com.atguigu.time.pager.TicketBuyPager;
+import com.atguigu.time.utils.SpUtils;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -43,11 +44,10 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         x.view().inject(this);
 
-        City city = (City) getIntent().getSerializableExtra("City");//从闪屏页获取到城市id
-        cityId = city.getCityId();
+        cityId = SpUtils.getInstance(this).get("City", 290);
+        Log.e("TAG", "cityId==" + cityId);
         initData();
     }
-
 
     //初始化数据
     private void initData() {
