@@ -7,6 +7,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 
+import com.atguigu.time.utils.CacheUtils;
+
 public class SplashActivity extends Activity {
     private RelativeLayout rl_welcome;
 
@@ -34,8 +36,15 @@ public class SplashActivity extends Activity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
+                boolean isShow = CacheUtils.getBoolean(SplashActivity.this, GuideActivity.GuideActivity_IsShow);
+                if (isShow) {
+                    //曾经进入过主页面
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(SplashActivity.this, GuideActivity.class);
+                    startActivity(intent);
+                }
                 finish();
             }
 

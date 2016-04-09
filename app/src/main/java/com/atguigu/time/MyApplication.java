@@ -8,7 +8,7 @@ import org.xutils.x;
  * Created by vence on 16/4/8 18:00
  * 邮箱 ：vence0815@foxmail.com
  */
-public class MyApplacation extends Application {
+public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
