@@ -45,10 +45,13 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="TxhDa0F6Z5hF2n5mM7w1HQW5FRTZPIjK" />
 
+
         <activity android:name=".activity.CityListActivity"></activity>
         <activity android:name=".GuideActivity" />
         <activity android:name=".activity.UserLoginActivity" />
         <activity android:name=".activity.UserRegistActivity"></activity>
+
+        <activity android:name=".HotMovieActivity"/>
     </application>
 
 </manifest>
