@@ -33,4 +33,13 @@
         <item name="android:textColor">@android:color/black</item>
     </style>
 
+    <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkbox_style</item>
+    </style>
+
+    <style name="CustomSwitchTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/switch_style</item>
+    </style>
+
+
 </resources>

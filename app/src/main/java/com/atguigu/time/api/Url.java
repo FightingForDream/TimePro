@@ -8,4 +8,5 @@ public class Url {
     //http://api.m.mtime.cn/GetCityByLongitudelatitude.api?longitude=116.386641&latitude=40.105512&cityName=
     public static final String GET_CITY = "http://api.m.mtime.cn/GetCityByLongitudelatitude.api?";
 
+    public static final String GET_CITY_LIST = "http://api.m.mtime.cn/Showtime/HotCitiesByCinema.api";
 }

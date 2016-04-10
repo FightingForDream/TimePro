@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import com.atguigu.time.R;
 
-public class CityList extends Activity {
+public class UserRegistActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_city_list);
+        setContentView(R.layout.activity_user_regist);
     }
 }

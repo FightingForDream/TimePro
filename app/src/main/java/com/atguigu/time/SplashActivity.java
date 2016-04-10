@@ -64,11 +64,9 @@ public class SplashActivity extends Activity {
                 if (isShow) {
                     //曾经进入过主页面
                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                    intent.putExtra("City",city);
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(SplashActivity.this, GuideActivity.class);
-                    intent.putExtra("City",city);
                     startActivity(intent);
                 }
                 finish();
