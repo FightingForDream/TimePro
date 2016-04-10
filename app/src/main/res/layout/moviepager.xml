@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--广告图片-->
+    <ImageView
+        android:id="@+id/iv_ad"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/welcome"
+        android:visibility="gone" />
+
+
+    <!--<RadioGroup
+        android:id="@+id/movie_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingBottom="3dp"
+        android:paddingTop="7dp">
+
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/rb_home"
+            android:button="@null"
+            android:text="首页"
+            android:textSize="20sp"
+            android:gravity="center"
+            />
+
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/rb_payticket"
+            android:button="@null"
+            android:text="购票"
+            android:textSize="20sp"
+            android:gravity="center"/>
+
+    </RadioGroup>-->
+<!--android:layout_alignParentTop="true"
+        android:scrollbars="none"
+        app:tabIndicatorColor="#0075c4"
+        app:tabIndicatorHeight="2dp"
+        app:tabMode="fixed"
+        app:tabPaddingBottom="0dp"
+        app:tabPaddingTop="0dp"
+        app:tabSelectedTextColor="#0075c4"
+        app:tabTextColor="#FF000000"-->
+    <android.support.design.widget.TabLayout
+        android:layout_alignParentTop="true"
+        android:id="@+id/movie_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/MyCustomTabLayout"/>
+
+    <include layout="@layout/loading" />
+
+    <com.atguigu.time.view.NoscrollViewPager
+        android:id="@+id/vp_movie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/movie_indicator"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </com.atguigu.time.view.NoscrollViewPager>
+    <!--<LinearLayout
+        android:id="@+id/movie_indicator"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        >
+        <RelativeLayout
+            android:id="@+id/rl_hot"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:clickable="true">
+            <TextView
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正在热映"
+                android:textSize="20sp"
+                android:textColor="@drawable/movie_textcolor_selector"/>
+            <View
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@drawable/movie_view_selector"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_will"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:clickable="true">
+            <TextView
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="即将上映"
+                android:textSize="20sp"
+                android:textColor="@drawable/movie_textcolor_selector"/>
+            <View
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@drawable/movie_view_selector"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>-->
+
+
+    <!--<ListView
+        android:id="@+id/lv_movie"
+        android:layout_below="@+id/movie_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </ListView>-->
+</RelativeLayout>

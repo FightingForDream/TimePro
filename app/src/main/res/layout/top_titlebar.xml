@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rl_titlebar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="#0075c4"
+    android:layout_centerVertical="true"
+    android:layout_alignParentTop="true"
+    >
+
+    <TextView
+        android:id="@+id/tv_city"
+        android:clickable="true"
+
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:text="北京"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:drawableRight="@android:drawable/arrow_down_float"
+        android:drawablePadding="8dp"
+        />
+    <LinearLayout
+        android:layout_toRightOf="@+id/tv_city"
+        android:layout_toLeftOf="@+id/iv_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        android:background="@drawable/title_bar_movie_cinema_switch_view_background">
+        <TextView
+            android:id="@+id/tv_movie"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="电影"
+            android:textColor="@drawable/title_bar_textcolor_selector"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:background="@drawable/title_bar_left_bg_selected"
+            />
+        <TextView
+            android:id="@+id/tv_cinema"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="影院"
+            android:textColor="@drawable/title_bar_textcolor_selector"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:background="@drawable/title_bar_right_bg_selected"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_search"
+        android:layout_marginRight="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        />
+
+</RelativeLayout>

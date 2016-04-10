@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="20dp"
+        android:src="@drawable/add_pic" />
+
+    <LinearLayout
+        android:id="@+id/ll_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_toLeftOf="@+id/btn_buy"
+        android:layout_toRightOf="@id/iv_icon"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!--当行 多余去尾  粗体-->
+        <TextView
+            android:id="@+id/item_movie_name"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textStyle="bold"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="伦敦陷落 6.7"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="“这不陷落么哈哈哈哈哈哈哈哈哈"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_on_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4月8日上映"
+            android:textSize="12sp"/>
+        <TextView
+            android:id="@+id/tv_on_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="今天143家影院上映4场"
+            android:textSize="12sp"/>
+
+        <LinearLayout
+            android:id="@+id/ll_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_3d"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="14dp"
+                android:src="@drawable/rectangle3d" />
+            <ImageView
+                android:id="@+id/iv_imax"
+                android:layout_marginLeft="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="14dp"
+                android:src="@drawable/rectangleimax" />
+            <ImageView
+                android:id="@+id/iv_big"
+                android:layout_marginLeft="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="14dp"
+                android:src="@drawable/rectanglelarget" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_buy"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/actor_detail_hot_playing_buy_icon"
+        android:text="购票"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:onClick="buyTicket"/>
+</RelativeLayout>
