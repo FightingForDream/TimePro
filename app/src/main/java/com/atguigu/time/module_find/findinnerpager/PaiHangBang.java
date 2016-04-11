@@ -1,4 +1,4 @@
-package com.atguigu.time.pager.findinnerpager;
+package com.atguigu.time.module_find.findinnerpager;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -6,17 +6,17 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.atguigu.time.base.BaseFindInnerPager;
+import com.atguigu.time.module_find.base.BaseFindInnerPager;
 
 /**
- * 发现--影评页面
+ * 发现————排行榜页面
  * @author xpl
  * created at 2016/4/10 9:33
  */
-public class YingPing extends BaseFindInnerPager {
+public class PaiHangBang extends BaseFindInnerPager {
     private TextView textView;
 
-    public YingPing(Activity activity) {
+    public PaiHangBang(Activity activity) {
         super(activity);
     }
 
@@ -32,7 +32,7 @@ public class YingPing extends BaseFindInnerPager {
     @Override
     public void initData() {
         super.initData();
-        textView.setText("发现--影评页面");
+        textView.setText("发现--排行榜页面");
 
     }
 }

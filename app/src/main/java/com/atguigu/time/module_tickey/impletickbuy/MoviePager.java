@@ -1,4 +1,4 @@
-package com.atguigu.time.pager.impletickbuy;
+package com.atguigu.time.module_tickey.impletickbuy;
 
 import android.app.Activity;
 import android.graphics.drawable.AnimationDrawable;
@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.atguigu.time.MainActivity;
 import com.atguigu.time.R;
-import com.atguigu.time.afragment.HotMovieFragment;
-import com.atguigu.time.afragment.WillOnMovieFragment;
+import com.atguigu.time.module_tickey.afragment.HotMovieFragment;
+import com.atguigu.time.module_tickey.afragment.WillOnMovieFragment;
 import com.atguigu.time.pager.TicketBuyPager;
 
 import org.xutils.view.annotation.ViewInject;

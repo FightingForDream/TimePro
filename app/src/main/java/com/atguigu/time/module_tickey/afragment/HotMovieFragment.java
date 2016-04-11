@@ -1,4 +1,4 @@
-package com.atguigu.time.afragment;
+package com.atguigu.time.module_tickey.afragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.atguigu.time.HotMovieActivity;
+import com.atguigu.time.module_tickey.activity.HotMovieActivity;
 import com.atguigu.time.R;
 
 import org.xutils.common.Callback;

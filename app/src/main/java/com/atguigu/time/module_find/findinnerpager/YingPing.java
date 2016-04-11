@@ -1,4 +1,4 @@
-package com.atguigu.time.pager.impletickbuy;
+package com.atguigu.time.module_find.findinnerpager;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -6,35 +6,33 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.atguigu.time.pager.TicketBuyPager;
-
+import com.atguigu.time.module_find.base.BaseFindInnerPager;
 
 /**
- * 作用：影院详情页面
+ * 发现--影评页面
+ * @author xpl
+ * created at 2016/4/10 9:33
  */
-public class CinemaPager extends TicketBuyPager {
-
+public class YingPing extends BaseFindInnerPager {
     private TextView textView;
 
-
-    public CinemaPager(Activity activity) {
+    public YingPing(Activity activity) {
         super(activity);
     }
 
     @Override
-    public View getView() {
+    public View initView() {
         textView = new TextView(mActivity);
+        textView.setTextColor(Color.RED);
         textView.setTextSize(30);
         textView.setGravity(Gravity.CENTER);
-        textView.setTextColor(Color.RED);
-
         return textView;
     }
 
     @Override
     public void initData() {
         super.initData();
-        System.out.println("影院详情页面数据被初始化了...");
-        textView.setText("影院详情页面的内容");
+        textView.setText("发现--影评页面");
+
     }
 }

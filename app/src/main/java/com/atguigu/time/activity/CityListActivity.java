@@ -24,6 +24,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * 城市列表的activity
+ */
 public class CityListActivity extends Activity {
 
 //    @ViewInject(R.id.lv_city)

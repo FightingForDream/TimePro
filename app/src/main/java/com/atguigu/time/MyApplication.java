@@ -1,6 +1,7 @@
 package com.atguigu.time;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.atguigu.time.api.VolleyManager;
 import com.atguigu.time.service.WriteLog;
@@ -14,6 +15,8 @@ import org.xutils.x;
  * 邮箱 ：vence0815@foxmail.com
  */
 public class MyApplication extends Application {
+
+    private static Context sContext;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,5 +28,11 @@ public class MyApplication extends Application {
 
         Fresco.initialize(this);  //初始化Fresco
         VolleyManager.getInstance(this); //初始化VolleyManager
+
+        sContext = getApplicationContext();//得到一个全局的context
+    }
+
+    public static Context getContext() {
+        return sContext;
     }
 }

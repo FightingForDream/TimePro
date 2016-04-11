@@ -48,10 +48,10 @@
 
         <activity android:name=".activity.CityListActivity"></activity>
         <activity android:name=".GuideActivity" />
-        <activity android:name=".activity.UserLoginActivity" />
-        <activity android:name=".activity.UserRegistActivity"></activity>
+        <activity android:name=".module_mine.UserLoginActivity" />
+        <activity android:name=".module_mine.UserRegistActivity"></activity>
 
-        <activity android:name=".HotMovieActivity"/>
+        <activity android:name=".module_tickey.activity.HotMovieActivity"/>
     </application>
 
 </manifest>

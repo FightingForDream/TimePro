@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import com.atguigu.time.R;
 import com.atguigu.time.base.BasePager;
-import com.atguigu.time.pager.impletickbuy.CinemaPager;
-import com.atguigu.time.pager.impletickbuy.MoviePager;
+import com.atguigu.time.module_tickey.impletickbuy.CinemaPager;
+import com.atguigu.time.module_tickey.impletickbuy.MoviePager;
 
 import org.xutils.x;
 

@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atguigu.time.R;
-import com.atguigu.time.adapter.MallListAdapter;
+import com.atguigu.time.module_mall.adapter.MallListAdapter;
 import com.atguigu.time.api.Url;
 import com.atguigu.time.base.BasePager;
 import com.atguigu.time.bean.Mall;

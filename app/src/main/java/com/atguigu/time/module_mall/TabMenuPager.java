@@ -1,4 +1,4 @@
-package com.atguigu.time.pager;
+package com.atguigu.time.module_mall;
 
 import android.app.Activity;
 import android.view.View;

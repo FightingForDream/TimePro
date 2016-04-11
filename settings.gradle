@@ -1,1 +1,1 @@
-include ':app', ':Scrollstripview', ':xutils_library', ':xUtils3-sample'
+include ':app'

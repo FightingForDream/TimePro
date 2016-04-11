@@ -1,4 +1,4 @@
-package com.atguigu.time.activity;
+package com.atguigu.time.module_mine;
 
 import android.app.Activity;
 import android.os.Bundle;

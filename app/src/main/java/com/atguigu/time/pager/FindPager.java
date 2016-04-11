@@ -9,12 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.atguigu.time.R;
-import com.atguigu.time.base.BaseFindInnerPager;
+import com.atguigu.time.module_find.base.BaseFindInnerPager;
 import com.atguigu.time.base.BasePager;
-import com.atguigu.time.pager.findinnerpager.News;
-import com.atguigu.time.pager.findinnerpager.PaiHangBang;
-import com.atguigu.time.pager.findinnerpager.Prevue;
-import com.atguigu.time.pager.findinnerpager.YingPing;
+import com.atguigu.time.module_find.findinnerpager.News;
+import com.atguigu.time.module_find.findinnerpager.PaiHangBang;
+import com.atguigu.time.module_find.findinnerpager.Prevue;
+import com.atguigu.time.module_find.findinnerpager.YingPing;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;

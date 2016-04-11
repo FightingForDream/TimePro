@@ -1,10 +1,10 @@
-package com.atguigu.time.pager.findinnerpager;
+package com.atguigu.time.module_find.findinnerpager;
 
 import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.atguigu.time.base.BaseFindInnerPager;
+import com.atguigu.time.module_find.base.BaseFindInnerPager;
 
 /**
  * 发现————预告片页面

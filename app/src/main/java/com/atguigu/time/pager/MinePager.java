@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.atguigu.time.R;
-import com.atguigu.time.activity.UserLoginActivity;
-import com.atguigu.time.activity.UserRegistActivity;
+import com.atguigu.time.module_mine.UserLoginActivity;
+import com.atguigu.time.module_mine.UserRegistActivity;
 import com.atguigu.time.base.BasePager;
 
 import org.xutils.view.annotation.ViewInject;

@@ -1,8 +1,9 @@
-package com.atguigu.time;
+package com.atguigu.time.module_tickey.activity;
 
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.atguigu.time.R;
 import com.atguigu.time.base.BaseActivity;
 
 import org.xutils.image.ImageOptions;
@@ -10,6 +11,9 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+/**
+ * 徐阿海
+ */
 @ContentView(R.layout.activity_big_image)
 public class HotMovieActivity extends BaseActivity {
 

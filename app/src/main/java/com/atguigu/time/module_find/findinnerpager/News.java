@@ -1,4 +1,4 @@
-package com.atguigu.time.pager.findinnerpager;
+package com.atguigu.time.module_find.findinnerpager;
 
 import android.app.Activity;
 import android.util.Log;
@@ -8,9 +8,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.atguigu.time.R;
-import com.atguigu.time.adapter.FindPagerNewsListAdapter;
+import com.atguigu.time.module_find.adapter.FindPagerNewsListAdapter;
 import com.atguigu.time.api.Url;
-import com.atguigu.time.base.BaseFindInnerPager;
+import com.atguigu.time.module_find.base.BaseFindInnerPager;
 import com.atguigu.time.bean.FindPageTopBean;
 import com.atguigu.time.bean.FindPagerNewsList;
 import com.google.gson.Gson;

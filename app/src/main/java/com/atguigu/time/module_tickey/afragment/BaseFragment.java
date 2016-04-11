@@ -1,4 +1,4 @@
-package com.atguigu.time.afragment;
+package com.atguigu.time.module_tickey.afragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
