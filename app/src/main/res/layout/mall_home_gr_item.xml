@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+   >
+    <com.atguigu.time.view.CircleImageView
+        android:id="@+id/iv_mall_home_gv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_launcher"/>
+    <TextView
+        android:id="@+id/tv_mall_home_gv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/iv_mall_home_gv"
+        android:text="玩具"
+        android:textColor="@android:color/darker_gray"/>
+
+</RelativeLayout>

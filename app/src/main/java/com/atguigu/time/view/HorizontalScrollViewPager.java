@@ -6,8 +6,9 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 /**
- * 作用：自定义ViewPager
- * 解决内部无法切换问题
+ * Created by SkyWalker on 2016/3/27.
+ * 自定义的ViewPager
+ * 解决内部无法切换的问题
  */
 public class HorizontalScrollViewPager extends ViewPager {
     public HorizontalScrollViewPager(Context context) {
@@ -21,52 +22,53 @@ public class HorizontalScrollViewPager extends ViewPager {
     private float startX;
     private float startY;
 
-
+    /**
+     * 1.竖直方向滑动--不处理 getParent().requestDisallowInterceptTouchEvent(false);
+     * <p/>
+     * 2.水平方向滑动 2.1当水平方向滑动，并且滑动的页面是第0个的时候，并且滑动的方向是左到右（endX - startX>0）
+     * getParent().requestDisallowInterceptTouchEvent(false);
+     * 2.2当水平方向滑动，并且滑动的页面是最后一个的时候，并且滑动的方向是右到左（endX - startX <0）
+     * getParent().requestDisallowInterceptTouchEvent(false);
+     * <p/>
+     * 2.3当滑动的时候在中间页面的时候 getParent().requestDisallowInterceptTouchEvent(true);
+     * <p/>
+     * 在按下事件中 getParent().requestDisallowInterceptTouchEvent(true);
+     * <p/>
+     * 判断竖直方向滑动和水平方向滑动
+     */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-
-        switch (ev.getAction()){
+        switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                //不能少呀
+                //一旦触碰的时候就请求把事件传递给自己
+                //不能少！
                 getParent().requestDisallowInterceptTouchEvent(true);
-                //1.记录坐标
                 startX = ev.getX();
                 startY = ev.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                //2.记录结束点
                 float endX = ev.getX();
                 float endY = ev.getY();
 
-                //3.计算偏移量
-                float distenceX = endX - startX;
-                float distenceY = endY - startY;
+                //计算偏移量
+                float distanceX = endX - startX;
+                float distanceY = endY - startY;
 
-                //4.判断是水平方向滑动还是竖直方向滑动
-                if(Math.abs(distenceX) > Math.abs(distenceY) ){//水平方向滑动
-//                    1.当滑动到第一个页面，并且方向是从左到右的滑动
-//                    endX - startX > 0 那么方向就是：从左往右滑动
-                    if(getCurrentItem()==0&&distenceX >0){
+                //判断是水平方向滑动还是竖直方向滑动
+                if (Math.abs(distanceX) > Math.abs(distanceY)) {//水平滑动
+                    //1.当滑动到第一个页面，并且方向是从左到右的滑动
+                    if (getCurrentItem() == 0 && distanceX > 0) {
                         getParent().requestDisallowInterceptTouchEvent(false);
-                    }
-//                    getParent().requestDisallowInterceptTouchEvent(false);
-//
-//                    2.当滑动到最后一个页面的时候，并且方向是从右到左滑动
-//                    endX - startX < 0 那么方向就是：从右往左滑动
-                    else if(getCurrentItem()==getAdapter().getCount()-1&&distenceX <0){
+                        //2.当滑动到最后一个页面的时候，并且方向是从右到左滑动
+                    } else if (getCurrentItem() == getAdapter().getCount() - 1 && distanceX < 0) {
                         getParent().requestDisallowInterceptTouchEvent(false);
-                    }
-//                    getParent().requestDisallowInterceptTouchEvent(false);
-                    else{
+                    }else {
+                        //3.其他情况
                         getParent().requestDisallowInterceptTouchEvent(true);
                     }
-//
-//                    3.其他情况
-//                    getParent().requestDisallowInterceptTouchEvent(true);
-                }else{
-                    //竖直方向滑动
+                } else {
+                    //竖直方向
                     getParent().requestDisallowInterceptTouchEvent(false);
-
                 }
                 break;
             case MotionEvent.ACTION_UP:

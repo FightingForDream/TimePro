@@ -16,7 +16,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         x.Ext.init(this);
-        x.isDebug();
+        x.Ext.setDebug(true);
 
         WriteLog.getInstance().init(); // 初始化日志
         SDKInitializer.initialize(getApplicationContext());

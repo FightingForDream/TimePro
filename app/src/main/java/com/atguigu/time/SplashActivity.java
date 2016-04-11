@@ -103,7 +103,6 @@ public class SplashActivity extends Activity {
             double latitude = location.getLatitude();//获取纬度
             double longitude = location.getLongitude();//获取经度
             //http://api.m.mtime.cn/GetCityByLongitudelatitude.api?longitude=116.386641&latitude=40.105512&cityName=
-            Log.e("TAG", "latitude==" + latitude + "longitude==" + longitude);
 
             RequestParams params = new RequestParams(Url.GET_CITY + "longitude=" + longitude + "&latitude=" + latitude+"&cityName=");
             x.http().get(params, new Callback.CommonCallback<String>() {
@@ -129,7 +128,6 @@ public class SplashActivity extends Activity {
 
                 }
             });
-
         }
     };
 

@@ -6,27 +6,31 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 /**
- * 作者：徐阿海 on 2016/3/25:22:34
- * QQ:845514573
- * 功能：让ViewPager不能滑动
+ * Created by SkyWalker on 2016/3/25.
+ * 屏蔽滑动的自定义ViewPager
  */
 public class NoscrollViewPager extends ViewPager {
-    public NoscrollViewPager(Context context) {
-        super(context);
-    }
-
     public NoscrollViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    //让ViewPager不能滑动
+    public NoscrollViewPager(Context context) {
+        super(context);
+    }
+
+    /**
+     * 不做任何处理
+     * @param ev
+     * @return
+     */
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         return true;
     }
+
     /**
-     * 如果该方法，返回true就相应，当前控件的onTouchEvent被触发
-     * 如果该方法返回false,把事件传递给子视图
+     * 如果该方法返回true就响应当前控件的onTouchEvent
+     * 返回false就把事件传递给子视图
      * @param ev
      * @return
      */

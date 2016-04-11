@@ -5,16 +5,14 @@ import android.util.AttributeSet;
 import android.widget.GridView;
 
 /**
- * Created by 笨货 on 2016/3/15.
- * 不能滑动的GridView
+ * 自定义的gridView
+ * Created by Administrator on 2016/1/13.
  */
 public class NoScrollGridView extends GridView {
-
     public NoScrollGridView(Context context) {
         super(context);
 
     }
-
     public NoScrollGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
