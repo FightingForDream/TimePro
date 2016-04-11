@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+    <TextView
+        android:id="@+id/tv_jianxun_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:background="@color/light_blue"
+        android:gravity="center"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:textSize="12sp"
+        android:textColor="@color/white"/>
+    <LinearLayout
+        android:id="@+id/ll_item_jianxun"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="7">
+
+            <TextView
+                android:id="@+id/tv_jianxun_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="@color/dark"/>
+
+            <TextView
+                android:id="@+id/tv_jianxun_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name" />
+
+            <LinearLayout
+                android:id="@+id/ll_item_tuji"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/sdv_tuji_01"
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_weight="4"
+                    fresco:placeholderImage="@drawable/img_default" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/sdv_tuji_02"
+                        android:layout_width="match_parent"
+                        android:layout_height="85dp"
+                        fresco:placeholderImage="@drawable/img_default" />
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/sdv_tuji_03"
+                        android:layout_width="match_parent"
+                        android:layout_height="85dp"
+                        android:layout_marginTop="10dp"
+                        fresco:placeholderImage="@drawable/img_default" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:id="@+id/tv_jianxun_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:padding="5dp"/>
+                <TextView
+                    android:id="@+id/tv_jianxun_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:padding="5dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_jianxun_thumbnail"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="100dp"
+            fresco:placeholderImage="@drawable/img_default" />
+    </LinearLayout>
+
+</LinearLayout>
