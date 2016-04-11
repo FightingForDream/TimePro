@@ -25,14 +25,14 @@
         android:layout_below="@id/tv_jianxun_tag">
         <TextView
             android:id="@+id/tv_jianxun_title"
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textColor="@color/dark" />
 
         <TextView
             android:id="@+id/tv_jianxun_subtitle"
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:layout_below="@id/tv_jianxun_title"/>

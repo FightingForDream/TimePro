@@ -59,4 +59,5 @@
     <dimen name="padding_large">16.0dip</dimen>
     <dimen name="padding_medium">8.0dip</dimen>
     <dimen name="padding_small">8.0dip</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

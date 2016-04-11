@@ -198,6 +198,7 @@ public class HomePager extends BasePager {
                     }
 
                     ll_home_gallery.addView(view);
+                    view.setOnClickListener(showHotMovieDetailListener);
                 }
             }
         }, new Response.ErrorListener() {
@@ -293,7 +294,12 @@ public class HomePager extends BasePager {
         VolleyManager.getInstance(mActivity).getQueue().add(galleryRequest);
         VolleyManager.getInstance(mActivity).getQueue().add(viewPagerRequest);
     }
+    private View.OnClickListener showHotMovieDetailListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
 
+        }
+    };
     /**
      * 设置首页ListView数据
      */

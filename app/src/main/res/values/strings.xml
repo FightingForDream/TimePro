@@ -15,4 +15,7 @@
     <string name="film_mall">电影商城</string>
     <string name="all_goods">全部商品</string>
     <string name="buy_ticket">购票</string>
+    <string name="title_activity_hot_movie_detail">HotMovieDetailActivity</string>
+    <string name="want_to_watch">我想看</string>
+    <string name="give_a_mark">我要评分</string>
 </resources>
