@@ -2,8 +2,10 @@ package com.atguigu.time;
 
 import android.app.Application;
 
+import com.atguigu.time.api.VolleyManager;
 import com.atguigu.time.service.WriteLog;
 import com.baidu.mapapi.SDKInitializer;
+import com.facebook.drawee.backends.pipeline.Fresco;
 
 import org.xutils.x;
 
@@ -20,5 +22,8 @@ public class MyApplication extends Application {
 
         WriteLog.getInstance().init(); // 初始化日志
         SDKInitializer.initialize(getApplicationContext());
+
+        Fresco.initialize(this);  //初始化Fresco
+        VolleyManager.getInstance(this); //初始化VolleyManager
     }
 }

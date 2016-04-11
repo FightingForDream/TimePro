@@ -14,4 +14,8 @@ public class Url {
 
     //商场感兴趣的更多商品
     public static final String MALL_MORE_URL = "http://api.m.mtime.cn/ECommerce/RecommendProducts.api?pageIndex=1&goodsIds=";
+
+    public static final String HOME_CONTENT = "http://api.m.mtime.cn/PageSubArea/GetHomeFeed.api";
+    public static final String HOME_GALLERY = "http://api.m.mtime.cn/PageSubArea/HotPlayMovies.api?locationId=290";
+    public static final String HOME_HEADER = "http://api.m.mtime.cn/PageSubArea/GetFirstPageAdvAndNews.api";
 }

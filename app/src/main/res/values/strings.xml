@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Time</string>
+    <string name="movie_num">影片数量</string>
+    <string name="upcoming">即将上映·</string>
+    <string name="upcoming_num">10部</string>
+    <string name="city_cinema">同城影院·</string>
+    <string name="city_cinema_num">10家</string>
+    <string name="mtime_hot_rank">时光热榜</string>
+    <string name="global_box_office">全球票房榜</string>
+    <string name="new_movie_notice">新片预告</string>
+    <string name="guess_film">猜电影</string>
+    <string name="home_search">影片/影人/影院 任你搜</string>
+    <string name="ticket_onsale">正在售票·</string>
+    <string name="default_location">北京</string>
+    <string name="film_mall">电影商城</string>
+    <string name="all_goods">全部商品</string>
+    <string name="buy_ticket">购票</string>
 </resources>
