@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.atguigu.time.R;
@@ -28,8 +29,8 @@ public class HomeContentAdapter extends BaseAdapter{
     private static final int TYPE_OU_MEI_XIN_PIAN = 2;
     private static final int TYPE_YING_PING = 3;
 
-    private static final int TU_JI = 1;
-    private static final int TOU_TIAO = 0;
+    private static final int TU_JI = 0;
+    private static final int TOU_TIAO = 2;
 
     private Activity activity;
     private HomeContentBean entity;
@@ -80,7 +81,6 @@ public class HomeContentAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         int type = getItemViewType(position);
-        int dataType = dataList.get(position).getDataType();
         //int flag = type + dataType;
         //ViewHolder holder = null;
         JianXunHolder jianXunHolder = null;
@@ -91,6 +91,7 @@ public class HomeContentAdapter extends BaseAdapter{
             //isNewType += type + ",";
         switch (type){
             case TYPE_JIAN_XUN:
+                int dataType = dataList.get(position).getStatus();
                 if (convertView == null) {
                     jianXunHolder = new JianXunHolder();
                     convertView = View.inflate(activity, R.layout.pager_item_jianxun, null);
@@ -101,10 +102,11 @@ public class HomeContentAdapter extends BaseAdapter{
                     jianXunHolder.tv_jianxun_comment = (TextView) convertView.findViewById(R.id.tv_jianxun_comment);
 
                     //if (dataType == TU_JI){
-                    jianXunHolder.ll_item_tuji = (LinearLayout) convertView.findViewById(R.id.ll_item_tuji);
+                    //jianXunHolder.rl_jianxun_container = (RelativeLayout) convertView.findViewById(R.id.rl_jianxun_container);
                     jianXunHolder.sdv_tuji_01 = (SimpleDraweeView) convertView.findViewById(R.id.sdv_tuji_01);
                     jianXunHolder.sdv_tuji_02 = (SimpleDraweeView) convertView.findViewById(R.id.sdv_tuji_02);
                     jianXunHolder.sdv_tuji_03 = (SimpleDraweeView) convertView.findViewById(R.id.sdv_tuji_03);
+                    jianXunHolder.sdv_tuji_04 = (SimpleDraweeView) convertView.findViewById(R.id.sdv_tuji_04);
                     //}else {
                     jianXunHolder.sdv_jianxun_thumbnail = (SimpleDraweeView) convertView.findViewById(R.id.sdv_jianxun_thumbnail);
                     //}
@@ -127,7 +129,7 @@ public class HomeContentAdapter extends BaseAdapter{
                 }else {
                     caidianyingHolder = (CaidianyingHolder) convertView.getTag();
                 }
-                setCaidianyingData(caidianyingHolder, position, type, dataType);
+                setCaidianyingData(caidianyingHolder, position, type);
                 break;
             case TYPE_OU_MEI_XIN_PIAN:
                 if (convertView == null) {
@@ -143,7 +145,7 @@ public class HomeContentAdapter extends BaseAdapter{
                 }else {
                     oumeixinpianHolder = (OumeixinpianHolder) convertView.getTag();
                 }
-                setOumeixinpianData(oumeixinpianHolder, position, type, dataType);
+                setOumeixinpianData(oumeixinpianHolder, position, type);
                 break;
             case TYPE_YING_PING:
                 if (convertView == null) {
@@ -163,7 +165,7 @@ public class HomeContentAdapter extends BaseAdapter{
                 }else {
                     yingpingHolder = (YingpingHolder) convertView.getTag();
                 }
-                setYingpingData(yingpingHolder, position, type, dataType);
+                setYingpingData(yingpingHolder, position, type);
                 break;
         }
         /*convertView = View.inflate(activity, R.layout.pager_item_jianxun, null);
@@ -189,47 +191,61 @@ public class HomeContentAdapter extends BaseAdapter{
         holder.tv_jianxun_comment.setText("评论" + dataList.get(position).getCommentCount()); //设置评论数
 
         if (dataType == TU_JI){
-            holder.ll_item_tuji.setVisibility(View.VISIBLE);
+            //holder.rl_jianxun_container.setVisibility(View.VISIBLE);
+            holder.sdv_tuji_01.setVisibility(View.VISIBLE);
             holder.sdv_tuji_02.setVisibility(View.VISIBLE);
             holder.sdv_tuji_03.setVisibility(View.VISIBLE);
+            holder.sdv_tuji_04.setVisibility(View.GONE);
+            holder.sdv_jianxun_thumbnail.setVisibility(View.GONE);
             holder.tv_jianxun_time.setText(dataList.get(position).getPublishTime() + "");  //设置发布时间
             holder.sdv_tuji_01.setImageURI(Uri.parse(dataList.get(position).getImages().get(1).getUrl1()));
             holder.sdv_tuji_02.setImageURI(Uri.parse(dataList.get(position).getImages().get(2).getUrl1()));
             holder.sdv_tuji_03.setImageURI(Uri.parse(dataList.get(position).getImages().get(3).getUrl1()));
-            holder.sdv_jianxun_thumbnail.setVisibility(View.GONE);
+
         }else if(dataType == TOU_TIAO){
-            holder.ll_item_tuji.setVisibility(View.VISIBLE);
-            holder.tv_jianxun_time.setText(dataList.get(position).getTime());  //设置发布时间
-            holder.sdv_tuji_01.setImageURI(Uri.parse(dataList.get(position).getImg1()));
+            //holder.rl_jianxun_container.setVisibility(View.VISIBLE);
+            holder.sdv_tuji_01.setVisibility(View.GONE);
             holder.sdv_tuji_02.setVisibility(View.GONE);
             holder.sdv_tuji_03.setVisibility(View.GONE);
+            holder.sdv_tuji_04.setVisibility(View.VISIBLE);
             holder.sdv_jianxun_thumbnail.setVisibility(View.GONE);
+            holder.tv_jianxun_time.setText(dataList.get(position).getTime());  //设置发布时间
+            holder.sdv_tuji_04.setImageURI(Uri.parse(dataList.get(position).getImg1()));
+
         }else {
+            //holder.rl_jianxun_container.setVisibility(View.GONE);
+            holder.sdv_tuji_01.setVisibility(View.GONE);
+            holder.sdv_tuji_02.setVisibility(View.GONE);
+            holder.sdv_tuji_03.setVisibility(View.GONE);
+            holder.sdv_tuji_04.setVisibility(View.GONE);
             holder.sdv_jianxun_thumbnail.setVisibility(View.VISIBLE);
-            holder.ll_item_tuji.setVisibility(View.GONE);
             holder.tv_jianxun_time.setText(dataList.get(position).getTime());  //设置发布时间
             Uri uri = Uri.parse(dataList.get(position).getImg1());
             holder.sdv_jianxun_thumbnail.setImageURI(uri);
         }
     }
 
-    public void setCaidianyingData(CaidianyingHolder holder, int position, int type, int dataType) {
+    public void setCaidianyingData(CaidianyingHolder holder, int position, int type) {
         holder.tv_caidianying_tag.setText(dataList.get(position).getTag());
         holder.tv_caidianying_title.setText(dataList.get(position).getTitle());
         holder.tv_caidianying_subtitle.setText(dataList.get(position).getMemo());
         holder.sdv_caidianying_thumbnail.setImageURI(Uri.parse(dataList.get(position).getPic1Url()));
     }
 
-    public void setOumeixinpianData(OumeixinpianHolder holder, int position, int type, int dataType) {
+    public void setOumeixinpianData(OumeixinpianHolder holder, int position, int type) {
         holder.tv_oumeixinpian_tag.setText(dataList.get(position).getTag());
-        holder.tv_oumeixinpian_title.setText(dataList.get(position).getTitle());
-        holder.tv_oumeixinpian_subtitle.setText(dataList.get(position).getTitlesmall());
-        holder.tv_oumeixinpian_content.setText(dataList.get(position).getTitlesmall());
-        ;
-        holder.sdv_oumeixinpian_thumbnail.setImageURI(Uri.parse(dataList.get(position).getPic1Url()));
+        holder.tv_oumeixinpian_title.setText(dataList.get(position).getTitleCn());
+        holder.tv_oumeixinpian_subtitle.setText(dataList.get(position).getTitleEn());
+        holder.tv_oumeixinpian_content.setText(dataList.get(position).getContent());
+
+        String url = dataList.get(position).getPic1Url();
+        if (url == null || url.isEmpty()){
+            url = dataList.get(position).getImage();
+        }
+        holder.sdv_oumeixinpian_thumbnail.setImageURI(Uri.parse(url));
     }
 
-    public void setYingpingData(YingpingHolder holder, int position, int type, int dataType) {
+    public void setYingpingData(YingpingHolder holder, int position, int type) {
         holder.tv_yingping_tag.setText(dataList.get(position).getTag());
         holder.tv_yingping_title.setText(dataList.get(position).getTitle());
         holder.tv_yingping_subtitle.setText(dataList.get(position).getSummaryInfo());
@@ -300,10 +316,11 @@ public class HomeContentAdapter extends BaseAdapter{
         public TextView tv_jianxun_comment;
         public SimpleDraweeView sdv_jianxun_thumbnail;
 
-        public LinearLayout ll_item_tuji;
+        //public LinearLayout ll_jianxun_container;
         public SimpleDraweeView sdv_tuji_01;
         public SimpleDraweeView sdv_tuji_02;
         public SimpleDraweeView sdv_tuji_03;
+        public SimpleDraweeView sdv_tuji_04;
     }
     static class CaidianyingHolder{
         /**------------------------猜电影模块---------------------*/

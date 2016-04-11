@@ -59,6 +59,7 @@ public class HomeContentBean {
         private int status;
         private int dataType;
         private String isShow;
+        private String image;
         private String img1;
         private String img2;
         private String img3;
@@ -71,6 +72,33 @@ public class HomeContentBean {
         private String summaryInfo;
         private String userImage;
         private String nickname;
+
+        private String titleCn;
+        private String titleEn;
+
+        public String getTitleEn() {
+            return titleEn;
+        }
+
+        public void setTitleEn(String titleEn) {
+            this.titleEn = titleEn;
+        }
+
+        public String getTitleCn() {
+            return titleCn;
+        }
+
+        public void setTitleCn(String titleCn) {
+            this.titleCn = titleCn;
+        }
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
 
         public RelatedObj getRelatedObj() {
             return relatedObj;

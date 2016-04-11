@@ -250,12 +250,38 @@ public class HomePager extends BasePager {
                 tv_shop_item05.setText(areaSecondBean.getSubThird().getTitleSmall());
                 tv_shop_item06.setText(areaSecondBean.getSubFifth().getTitleSmall());
 
-                sdv_shop_item01.setImageURI(Uri.parse(areaSecondBean.getSubFirst().getImage()));
-                sdv_shop_item02.setImageURI(Uri.parse(areaSecondBean.getSubSecond().getImage()));
+
+                String url1 = areaSecondBean.getSubFirst().getImage();
+                if (url1.isEmpty()){
+                    url1 = areaSecondBean.getSubFirst().getImage2();
+                }
+                String url2 = areaSecondBean.getSubSecond().getImage();
+                if (url2.isEmpty()){
+                    url2 = areaSecondBean.getSubSecond().getImage2();
+                }
+                String url3 = areaSecondBean.getSubThird().getImage();
+                if (url3.isEmpty()){
+                    url3 = areaSecondBean.getSubThird().getImage2();
+                }
+                String url4 = areaSecondBean.getSubFirst().getImage();
+                if (url4.isEmpty()){
+                    url4 = areaSecondBean.getSubFirst().getImage2();
+                }
+                String url5 = areaSecondBean.getSubFifth().getImage();
+                if (url5.isEmpty()){
+                    url5 = areaSecondBean.getSubFifth().getImage2();
+                }
+                String url6 = areaSecondBean.getSubFirst().getImage();
+                if (url6.isEmpty()){
+                    url6 = areaSecondBean.getSubFirst().getImage2();
+                }
+
+                sdv_shop_item01.setImageURI(Uri.parse(url1));
+                sdv_shop_item02.setImageURI(Uri.parse(url2));
                 sdv_shop_item03.setImageURI(Uri.parse(areaSecondBean.getSubFourth().getImage()));
                 sdv_shop_item04.setImageURI(Uri.parse(areaSecondBean.getSubFourth().getImage2()));
-                sdv_shop_item05.setImageURI(Uri.parse(areaSecondBean.getSubThird().getImage()));
-                sdv_shop_item06.setImageURI(Uri.parse(areaSecondBean.getSubFifth().getImage()));
+                sdv_shop_item05.setImageURI(Uri.parse(url3));
+                sdv_shop_item06.setImageURI(Uri.parse(url5));
             }
         }, new Response.ErrorListener() {
             @Override
