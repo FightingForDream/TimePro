@@ -23,4 +23,7 @@ public class Url {
     public static final String TOP_Find = "http://api.m.mtime.cn/PageSubArea/GetRecommendationIndexInfo.api";
     //发现页面新闻页面listView数据
     public static final java.lang.String FIND_NEWSLIST = "http://api.m.mtime.cn/News/NewsList.api?pageIndex=1";
+
+    //得到城市列表的数据
+    public static final String CITY_LIST = "http://api.m.mtime.cn/Showtime/HotCitiesByCinema.api";
 }

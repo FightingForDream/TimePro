@@ -1,21 +1,35 @@
 package com.atguigu.time.activity;
 
 import android.app.Activity;
+import android.app.Service;
 import android.os.Bundle;
+import android.os.Vibrator;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.atguigu.time.R;
-import com.atguigu.time.adapter.CityListAdapter;
+import com.atguigu.time.adapter.CityListAdatapter;
+import com.atguigu.time.adapter.HotCityListAdapter;
+import com.atguigu.time.api.Url;
+import com.atguigu.time.api_net.VolleyManager;
+import com.atguigu.time.bean.City;
 import com.atguigu.time.bean.CityList;
+import com.atguigu.time.service.LocationService;
+import com.atguigu.time.utils.CityListSort;
+import com.atguigu.time.utils.SearchALG;
 import com.atguigu.time.view.NoScrollGridView;
-import com.google.gson.Gson;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
 
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
+import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.ArrayList;
@@ -26,33 +40,147 @@ import java.util.TreeMap;
 
 /**
  * 城市列表的activity
+ * <p/>
+ * //带结果的回调，调用时使用带结果的启动即可，得到城市对应的编号
+ * Intent intent = new Intent();
+ * intent.putExtra("cityID", pEntity.getId());
+ * context.setResult(1, intent);
+ * context.finish();
  */
 public class CityListActivity extends Activity {
 
-//    @ViewInject(R.id.lv_city)
-//    private ListView lv_city;
-//
-//    @ViewInject(R.id.gv_citylist)
-//    private GridView gv_citylist;
-//
-//    @ViewInject(R.id.tv_head_location)
-//    private TextView tv_head_location;
+    @ViewInject(R.id.lv_city)
+    private ListView lv_city;
+
+    @ViewInject(R.id.gv_citylist)
+    private NoScrollGridView gv_citylist;
+
+    @ViewInject(R.id.tv_head_location)
+    private TextView tv_head_location;
+
+    @ViewInject(R.id.tv_canner)
+    private TextView tv_canner;//取消的按钮
+
+    @ViewInject(R.id.et_search)
+    private EditText et_search;
+
+    @ViewInject(R.id.iv_back)
+    private ImageView iv_back;
+
+    @ViewInject(R.id.lv_city_search)
+    private ListView lv_city_search;
 
     private View headView;
     private List<String> litters;
     private Map<String, List<CityList.PEntity>> maps;
+
+    private LocationService locationService;
+    public Vibrator mVibrator;
+    private List<CityList.PEntity> pEntities;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_list);
-//        x.view().inject(this);
+        x.view().inject(this);
         headView = View.inflate(this, R.layout.city_list_head, null);
-//        x.view().inject(this,headView);
+        x.view().inject(this, headView);
+
+        //定位相关
+        locationService = new LocationService(getApplicationContext());
+        mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
+        locationService.start();// 定位SDK
+
         getDataFromServer();
-        Log.e("TAG", "onCreate");
+        setListener();
     }
+
+
+    /**
+     * 设置各种监听
+     */
+    private void setListener() {
+        iv_back.setOnClickListener(new View.OnClickListener() {//回退键
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        tv_canner.setOnClickListener(new View.OnClickListener() {//取消按钮
+            @Override
+            public void onClick(View v) {
+                et_search.setText(null);
+                tv_canner.setVisibility(View.GONE);
+                lv_city_search.setVisibility(View.GONE);
+                lv_city.setVisibility(View.VISIBLE);
+                isFirstAcy = true;
+            }
+        });
+
+        et_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_canner.setVisibility(View.VISIBLE);
+                lv_city.setVisibility(View.GONE);
+                lv_city_search.setVisibility(View.VISIBLE);
+                if (et_search.getText().toString().length() == 0) {
+                    lv_city_search.setAdapter(new HotCityListAdapter(CityListActivity.this, pEntities, false));
+                }
+
+            }
+        });
+
+        et_search.addTextChangedListener(watcher);
+    }
+
+    private boolean isFirstAcy = true;
+    List<CityList.PEntity> avable = new ArrayList<>();
+    private TextWatcher watcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            tv_canner.setVisibility(View.VISIBLE);
+            lv_city.setVisibility(View.GONE);
+            lv_city_search.setVisibility(View.VISIBLE);
+
+            if (isFirstAcy) {
+                for (int i = 0; i < pEntities.size(); i++) {
+                    if (s != null && !s.equals("") && s.length() > 0 && SearchALG.isAddToHintList(pEntities.get(i).getN(), s.toString())) {
+                        avable.add(pEntities.get(i));
+                    }
+                }
+                lv_city_search.setAdapter(new HotCityListAdapter(CityListActivity.this, avable, false));
+                isFirstAcy = false;
+            } else {
+                List<CityList.PEntity> avable1 = new ArrayList<>();
+                for (int i = 0; i < avable.size(); i++) {
+                    if (s != null && !s.equals("") && s.length() > 0 && SearchALG.isAddToHintList(avable.get(i).getN(), s.toString())) {
+                        avable1.add(avable.get(i));
+                    }
+                }
+                lv_city_search.setAdapter(new HotCityListAdapter(CityListActivity.this, avable1, false));
+                if (avable1.size() == 0) {
+                    isFirstAcy = true;
+                }
+                avable.clear();
+            }
+            if (s.length() == 0) {
+                lv_city_search.setAdapter(new HotCityListAdapter(CityListActivity.this, pEntities, false));
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
     /**
      * 联网获取数据
@@ -60,54 +188,15 @@ public class CityListActivity extends Activity {
     private void getDataFromServer() {
         Log.e("TAG", "getDataFromServer");
 
-//        RequestParams params = new RequestParams(Url.GET_CITY_LIST);
-        RequestParams params = new RequestParams("http://api.m.mtime.cn/Showtime/HotCitiesByCinema.api");
-        ;
-        x.http().get(params, new Callback.CommonCallback<String>() {
+        VolleyManager.newInstance().GsonGetRequest("TAG", Url.CITY_LIST, CityList.class, new Response.Listener<CityList>() {
             @Override
-            public void onSuccess(String result) {
-
+            public void onResponse(CityList cityList) {
+                handlerData(cityList);
             }
-
+        }, new Response.ErrorListener() {
             @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-        RequestParams params1 = new RequestParams("http://api.m.mtime.cn/GetCityByLongitudelatitude.api?");
-        x.http().get(params1
-                , new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.e("TAG", "success");
-                CityList cityList = new Gson().fromJson(result, CityList.class);
-//                handlerData(cityList);
-                Log.e("TAG", cityList.getP().size() + " cityList.getP().size()");
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("TAG", ex.toString());
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
+            public void onErrorResponse(VolleyError error) {
+                Log.e("TAG", error.toString());
             }
         });
     }
@@ -120,6 +209,7 @@ public class CityListActivity extends Activity {
     private void handlerData(CityList cityList) {
         maps = new TreeMap<>();
         litters = new ArrayList<>();
+        pEntities = CityListSort.sortDatas(cityList.getP());
 
         for (int i = 0; i < cityList.getP().size(); i++) {
             CityList.PEntity pEntity = cityList.getP().get(i);
@@ -135,53 +225,52 @@ public class CityListActivity extends Activity {
         }
 
         Collections.sort(litters);
-//        Log.e("TAG", litters.size() + "");
-//        gv_citylist.setAdapter(new CityListAdapter(this, cityList.getP().subList(0, 12)));
-//        lv_city.removeHeaderView(headView);
-//        lv_city.addHeaderView(headView);
-//        lv_city.setAdapter(new MyCityListAdatapter());
+        Log.e("TAG", litters.size() + "");
+        gv_citylist.setAdapter(new HotCityListAdapter(this, cityList.getP().subList(0, 12), true));
+        lv_city.removeHeaderView(headView);
+        lv_city.addHeaderView(headView);
+        lv_city.setAdapter(new CityListAdatapter(CityListActivity.this, litters, maps));
     }
 
-    class MyCityListAdatapter extends BaseAdapter {
 
-        @Override
-        public int getCount() {
-
-            return litters.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return litters.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHoder hoder = null;
-            if (convertView == null) {
-                hoder = new ViewHoder();
-                convertView = View.inflate(CityListActivity.this, R.layout.city_list_inner_item, null);
-                hoder.gv_inner = (NoScrollGridView) convertView.findViewById(R.id.gv_inner);
-                hoder.tv_title = (TextView) convertView.findViewById(R.id.tv_titile);
-                convertView.setTag(hoder);
-            } else {
-                hoder = (ViewHoder) convertView.getTag();
-            }
-
-            hoder.tv_title.setText(litters.get(position));
-            hoder.gv_inner.setAdapter(new CityListAdapter(CityListActivity.this, maps.get(litters.get(position))));
-
-            return convertView;
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //获取locationService实例，建议应用中只始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
+        locationService.registerListener(mListener);
+        //注册监听
+        int type = getIntent().getIntExtra("from", 0);
+        if (type == 0) {
+            locationService.setLocationOption(locationService.getDefaultLocationClientOption());
+        } else if (type == 1) {
+            locationService.setLocationOption(locationService.getOption());
         }
     }
 
-    class ViewHoder {
-        TextView tv_title;
-        NoScrollGridView gv_inner;
-    }
+
+    /**
+     * 在此方法中获取地理信息的经纬度
+     */
+    private BDLocationListener mListener = new BDLocationListener() {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            double latitude = location.getLatitude();//获取纬度
+            double longitude = location.getLongitude();//获取经度
+            //http://api.m.mtime.cn/GetCityByLongitudelatitude.api?longitude=116.386641&latitude=40.105512&cityName=
+
+            VolleyManager.newInstance().GsonGetRequest("TAG", Url.GET_CITY + "longitude=" + longitude + "&latitude=" + latitude + "&cityName=", City.class, new Response.Listener<City>() {
+                @Override
+                public void onResponse(City response) {
+                    tv_head_location.setText(response.getName());
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
+        }
+    };
 }
+

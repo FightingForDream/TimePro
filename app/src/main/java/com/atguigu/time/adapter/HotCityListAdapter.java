@@ -1,6 +1,7 @@
 package com.atguigu.time.adapter;
 
-import android.content.Context;
+import android.content.Intent;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -16,13 +17,15 @@ import java.util.List;
  * Created by vence on 16/4/10 09:43
  * 邮箱 ：vence0815@foxmail.com
  */
-public class CityListAdapter extends BaseAdapter {
-    private Context context;
+public class HotCityListAdapter extends BaseAdapter {
+    private boolean isCenter=false;
+    private CityListActivity context;
     List<CityList.PEntity> cityList;
 
-    public CityListAdapter(CityListActivity cityListActivity, List<CityList.PEntity> cityList) {
+    public HotCityListAdapter(CityListActivity cityListActivity, List<CityList.PEntity> cityList,boolean isCenter) {
         this.context = cityListActivity;
         this.cityList = cityList;
+        this.isCenter=isCenter;
     }
 
 
@@ -53,9 +56,24 @@ public class CityListAdapter extends BaseAdapter {
             viewHolder = (ViewHoder) convertView.getTag();
         }
 
-        CityList.PEntity pEntity = cityList.get(position);
+        final CityList.PEntity pEntity = cityList.get(position);
+        if(isCenter) {
+            viewHolder.tv_litter.setGravity(Gravity.CENTER);
+        }else{
+            viewHolder.tv_litter.setGravity(Gravity.LEFT);
+        }
 
         viewHolder.tv_litter.setText(pEntity.getN());
+        viewHolder.tv_litter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //带结果的回调
+                Intent intent = new Intent();
+                intent.putExtra("cityID", pEntity.getId());
+                context.setResult(1, intent);
+                context.finish();
+            }
+        });
         return convertView;
     }
 
