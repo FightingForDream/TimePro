@@ -3,12 +3,14 @@ package com.atguigu.time.pager;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.atguigu.time.R;
+import com.atguigu.time.base.BasePager;
 import com.atguigu.time.module_mine.UserLoginActivity;
 import com.atguigu.time.module_mine.UserRegistActivity;
-import com.atguigu.time.base.BasePager;
+import com.xys.libzxing.zxing.activity.CaptureActivity;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -29,6 +31,12 @@ public class MinePager extends BasePager {
      */
     @ViewInject(R.id.tv_regist)
     private TextView tv_regist;
+
+    /**
+     * 扫描二维码
+     */
+    @ViewInject(R.id.rl_scane)
+    private RelativeLayout rl_scane;
 
 
     public MinePager(Activity activity) {
@@ -59,8 +67,15 @@ public class MinePager extends BasePager {
     private void setListener() {
         tv_login.setOnClickListener(new MyclickListener());
         tv_regist.setOnClickListener(new MyclickListener());
+        rl_scane.setOnClickListener(new View.OnClickListener() {//扫描二维码
+            @Override
+            public void onClick(View v) {
+                //打开扫描界面扫描条形码或二维码
+                Intent openCameraIntent = new Intent(mActivity, CaptureActivity.class);
+                mActivity.startActivityForResult(openCameraIntent, 0);
+            }
+        });
     }
-
 
     class MyclickListener implements View.OnClickListener {
 

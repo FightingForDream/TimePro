@@ -2,9 +2,11 @@ package com.atguigu.time.activity;
 
 import android.app.Activity;
 import android.app.Service;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -28,10 +30,15 @@ import com.atguigu.time.utils.SearchALG;
 import com.atguigu.time.view.NoScrollGridView;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
+import com.google.gson.Gson;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -92,6 +99,13 @@ public class CityListActivity extends Activity {
         mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
         locationService.start();// 定位SDK
 
+        /**
+         * 先从本地读取城市列表的数据。
+         */
+        String cityJson = getStringFromAssert("cityJson");
+        if(!TextUtils.isEmpty(cityJson)) {
+            handlerData(new Gson().fromJson(cityJson, CityList.class));
+        }
         getDataFromServer();
         setListener();
     }
@@ -219,7 +233,6 @@ public class CityListActivity extends Activity {
             } else {
                 maps.put(startLitter, new ArrayList<CityList.PEntity>());
                 litters.add(startLitter);
-                Log.e("TAG", litters.size() + "");
                 maps.get(startLitter).add(pEntity);
             }
         }
@@ -272,5 +285,29 @@ public class CityListActivity extends Activity {
             });
         }
     };
+
+    /**
+     *
+     * 从资产目录中获取城市列表
+     * @param fileName
+     * @return
+     */
+    public String getStringFromAssert(String fileName) {
+        String content = null; //结果字符串
+        Log.e("TAG", "getStringFromAssert");
+        AssetManager assetManager = this.getAssets();
+        try {
+            InputStream is = assetManager.open(fileName);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            StringBuilder stringBuffer = new StringBuilder();
+            String str = null;
+            while((str = br.readLine())!=null){
+              content= String.valueOf(stringBuffer.append(str));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return content;
+    }
 }
 
