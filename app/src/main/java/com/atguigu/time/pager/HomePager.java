@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Gallery;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -200,6 +201,7 @@ public class HomePager extends BasePager {
                     ll_home_gallery.addView(view);
                     view.setOnClickListener(showHotMovieDetailListener);
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -297,6 +299,9 @@ public class HomePager extends BasePager {
     private View.OnClickListener showHotMovieDetailListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            /*switch (view.getId()){
+                case
+            }*/
 
         }
     };

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/app_name"
+        android:orderInCategory="100"
+        android:icon="@drawable/preferential_share"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_test"
+        android:title="@string/app_name"
+        android:orderInCategory="100"
+        android:icon="@drawable/icon_my_home_favorites_45x45"
+        app:showAsAction="ifRoom" />
+</menu>

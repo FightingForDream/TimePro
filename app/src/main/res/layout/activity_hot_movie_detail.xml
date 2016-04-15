@@ -1,450 +1,557 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-
-<android.support.percent.PercentRelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.atguigu.time.activity.HotMovieDetailActivity">
-
-    <android.support.design.widget.AppBarLayout
+    <!--<android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:background="@color/white"
+        app:theme="@style/AppTheme.AppBarOverlay">
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">-->
+        <!--</android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+-->
+    <com.atguigu.time.view.XScrollView
+        android:id="@+id/film_detail_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            tools:context="com.atguigu.time.activity.HotMovieDetailActivity">
+
+            <include layout="@layout/content_hot_movie_detail" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@android:drawable/ic_dialog_email" />
+
+            <ImageView
+                android:id="@+id/iv_film_detail"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/actor_detail_top_background" />
+
+            <ImageView
+                android:id="@+id/iv_film_detail_arc"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@id/iv_film_detail"
+                android:scaleType="fitXY"
+                android:src="@drawable/arc_green" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv_film_detail_01"
+                android:layout_width="105dp"
+                android:layout_height="160dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="150dp"
+                app:placeholderImage="@drawable/img_default" />
+
+            <TextView
+                android:id="@+id/tv_film_detail_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/sdv_film_detail_01"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@id/sdv_film_detail_01"
+                android:text="伦敦陷落"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_film_detail_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/tv_film_detail_title"
+                android:layout_below="@id/tv_film_detail_title"
+                android:text="London Has Fallen"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_film_detail_length"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/tv_film_detail_subtitle"
+                android:layout_below="@id/iv_film_detail_arc"
+                android:text="99分钟"
+                android:textColor="@color/dark"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_film_detail_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/tv_film_detail_subtitle"
+                android:layout_below="@id/tv_film_detail_length"
+                android:text="动作/犯罪/惊悚"
+                android:textColor="@color/dark"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_film_detail_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/tv_film_detail_length"
+                android:layout_below="@id/tv_film_detail_type"
+                android:text="2016年4月8日中国上映"
+                android:textColor="@color/dark"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_film_detail_watch"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignLeft="@id/tv_film_detail_time"
+                android:layout_below="@id/tv_film_detail_time"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shape_detail_btn_watch"
+                android:text="@string/want_to_watch" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_below="@id/tv_film_detail_time"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@id/btn_film_detail_watch"
+                android:background="@drawable/shape_detail_btn_grade"
+                android:text="@string/give_a_mark"
+                android:textColor="#B2CE86" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/iv_film_detail_arc"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:background="#659D0E"
+                android:text="@string/app_name"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_film_detail_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_film_detail_watch"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/app_name"
+                android:textColor="#FDA237" />
+
+            <Button
+                android:id="@+id/btn_film_detail_buy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_film_detail_desc"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shape_detail_btn_buy"
+                android:text="查影讯/购票"
+                android:textColor="@color/white" />
+
+            <View
+                android:id="@+id/film_detail_space_01"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_below="@id/btn_film_detail_buy"
+                android:background="@color/light_gray"></View>
+
+            <LinearLayout
+                android:id="@+id/ll_film_detail_plot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/film_detail_space_01"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_film_brief"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:textColor="@color/light_dark"
+                    android:padding="5dp"
+                    />
+                <!--<TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name" />-->
+                <ImageButton
+                    android:id="@+id/ib_show_more_brief"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/arrow_down" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/film_detail_space_02"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_below="@id/ll_film_detail_plot"
+                android:background="@color/light_gray">
+
+            </View>
+
+            <TextView
+                android:id="@+id/film_detail_video_stills"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/film_detail_space_02"
+                android:layout_marginTop="15dp"
+                android:padding="5dp"
+                android:text="视频剧照" />
+
+            <LinearLayout
+                android:id="@+id/ll_film_detail_stills"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/film_detail_video_stills"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6">
+
+                    <TextView
+                        android:id="@+id/tv_film_stills_num_01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="16个视频" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/img_right_arrow" />
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_below="@id/tv_film_stills_num_01"
+                        android:layout_marginRight="10dp"
+                        app:placeholderImage="@drawable/img_default" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/light_gray"></View>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="3">
+
+                    <TextView
+                        android:id="@+id/tv_film_stills_num_02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="119张图片" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/img_right_arrow" />
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_below="@id/tv_film_stills_num_02"
+                        android:layout_marginRight="10dp"
+                        app:placeholderImage="@drawable/img_default" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/film_detail_space_03"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_below="@id/ll_film_detail_stills"
+                android:background="@color/light_gray"></View>
+
+            <LinearLayout
+                android:id="@+id/ll_film_detail_actors_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/film_detail_space_03"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="186位演职人员"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_right_arrow" />
+            </LinearLayout>
+
+            <HorizontalScrollView
+                android:id="@+id/hsv_film_detail_actors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_film_detail_actors_title"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:id="@+id/ll_film_detail_actors"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="主要演员"
+                            android:textSize="12sp" />
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:layout_width="100dp"
+                            android:layout_height="150dp"
+                            app:placeholderImage="@drawable/img_default" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="巴巴克"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <View
+                android:id="@+id/film_detail_space_04"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_below="@id/hsv_film_detail_actors"
+                android:background="@color/light_gray">
+
+            </View>
+
+            <LinearLayout
+                android:id="@+id/ll_film_detail_news_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/film_detail_space_04"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="38条相关新闻"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_right_arrow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_film_detail_new_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_film_detail_news_title"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_name" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:text="@string/app_name" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_name" />
+                </LinearLayout>
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="3"
+                    app:placeholderImage="@drawable/img_default" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/film_detail_space_05"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_below="@id/ll_film_detail_new_content"
+                android:background="@color/light_gray"></View>
+
+            <LinearLayout
+                android:id="@+id/ll_film_detail_comment_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/film_detail_space_05"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="47条精选影评"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_right_arrow" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_film_detail_comment_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_film_detail_comment_title"
+                android:padding="5dp"
+                android:text="@string/app_name" />
+
+            <TextView
+                android:id="@+id/tv_film_detail_comment_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_film_detail_comment_title"
+                android:ellipsize="end"
+                android:lines="3"
+                android:padding="5dp"
+                android:text="@string/app_name" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv_film_detail_avatar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/tv_film_detail_comment_content"
+                app:placeholderImage="@drawable/img_default"
+                app:roundedCornerRadius="25dp" />
+
+            <LinearLayout
+                android:id="@+id/ll_film_detail_01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_film_detail_comment_content"
+                android:layout_toRightOf="@id/sdv_film_detail_avatar"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_name" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="#B2CE86"
+                        android:text="@string/app_name" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lv_film_detail_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_film_detail_01">
+
+            </ListView>
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lv_film_detail_comment"
+                app:placeholderImage="@drawable/img_default" />
+        </android.support.percent.PercentRelativeLayout>
+    </com.atguigu.time.view.XScrollView>
+    <RelativeLayout
+        android:id="@+id/rl_film_detail_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_hot_movie_detail" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
-
-    <ImageView
-        android:id="@+id/iv_film_detail"
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/actor_detail_top_background"/>
-    <ImageView
-        android:id="@+id/iv_film_detail_arc"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:scaleType="fitXY"
-        android:layout_alignBottom="@id/iv_film_detail"
-        android:src="@drawable/arc_green"/>
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/sdv_film_detail_01"
-        android:layout_width="105dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginLeft="15dp"
-        app:placeholderImage="@drawable/img_default"/>
-    <TextView
-        android:id="@+id/tv_film_detail_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:layout_marginLeft="15dp"
-        android:textSize="18sp"
-        android:text="伦敦陷落"
-        android:layout_toRightOf="@id/sdv_film_detail_01"
-        android:layout_alignTop="@id/sdv_film_detail_01"/>
-    <TextView
-        android:id="@+id/tv_film_detail_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        android:text="London Has Fallen"
-        android:layout_alignLeft="@id/tv_film_detail_title"
-        android:layout_below="@id/tv_film_detail_title"/>
-    <TextView
-        android:id="@+id/tv_film_detail_length"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/dark"
-        android:textSize="12sp"
-        android:text="99分钟"
-        android:layout_alignLeft="@id/tv_film_detail_subtitle"
-        android:layout_below="@id/iv_film_detail_arc"/>
-    <TextView
-        android:id="@+id/tv_film_detail_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/dark"
-        android:textSize="12sp"
-        android:text="动作/犯罪/惊悚"
-        android:layout_alignLeft="@id/tv_film_detail_subtitle"
-        android:layout_below="@id/tv_film_detail_length"/>
-    <TextView
-        android:id="@+id/tv_film_detail_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/dark"
-        android:textSize="12sp"
-        android:text="2016年4月8日中国上映"
-        android:layout_alignLeft="@id/tv_film_detail_length"
-        android:layout_below="@id/tv_film_detail_type"/>
-    <Button
-        android:id="@+id/btn_film_detail_watch"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:text="@string/want_to_watch"
-        android:background="@drawable/shape_detail_btn_watch"
-        android:layout_marginTop="20dp"
-        android:layout_alignLeft="@id/tv_film_detail_time"
-        android:layout_below="@id/tv_film_detail_time"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:background="@drawable/shape_detail_btn_grade"
-        android:text="@string/give_a_mark"
-        android:layout_marginTop="20dp"
-        android:textColor="#B2CE86"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/btn_film_detail_watch"
-        android:layout_below="@id/tv_film_detail_time"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textColor="@color/white"
-        android:layout_alignTop="@id/iv_film_detail_arc"
-        android:layout_marginTop="5dp"
-        android:background="#659D0E"
-        android:layout_marginRight="15dp"
-        android:layout_alignParentRight="true"/>
-    <TextView
-        android:id="@+id/tv_film_detail_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/app_name"
-        android:textColor="#FDA237"
-        android:layout_below="@id/btn_film_detail_watch"
-        android:layout_centerHorizontal="true"/>
-    <Button
-        android:id="@+id/btn_film_detail_buy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="查影讯/购票"
-        android:textColor="@color/white"
-        android:background="@drawable/shape_detail_btn_buy"
-        android:layout_below="@id/tv_film_detail_desc"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="15dp"/>
-    <View
-        android:id="@+id/film_detail_space_01"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:background="@color/light_gray"
-        android:layout_below="@id/btn_film_detail_buy">
-    </View>
-    <LinearLayout
-        android:id="@+id/ll_film_detail_plot"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@id/film_detail_space_01"
-        android:padding="5dp">
-        <TextView
+            android:layout_height="50dp"
+            android:title="伦敦陷落"
+            android:background="#0075C4"
+            app:popupTheme="@style/AppTheme.AppBarOverlay" />
+        <Button
+            android:id="@+id/btn_film_detail_header_buy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"/>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/arrow_down"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="10dp"/>
-    </LinearLayout>
-    <View
-        android:id="@+id/film_detail_space_02"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:background="@color/light_gray"
-        android:layout_below="@id/ll_film_detail_plot">
-    </View>
-    <TextView
-        android:id="@+id/film_detail_video_stills"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="视频剧照"
-        android:layout_marginTop="15dp"
-        android:padding="5dp"
-        android:layout_below="@id/film_detail_space_02"/>
-    <LinearLayout
-        android:id="@+id/ll_film_detail_stills"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/film_detail_video_stills"
-        android:layout_marginTop="5dp"
-        android:padding="5dp"
-        android:orientation="horizontal">
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="6">
-            <TextView
-                android:id="@+id/tv_film_stills_num_01"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="16个视频"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_right_arrow"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"/>
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginRight="10dp"
-                app:placeholderImage="@drawable/img_default"
-                android:layout_below="@id/tv_film_stills_num_01"/>
-        </RelativeLayout>
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:visibility="invisible"
+            android:background="@drawable/shape_detail_btn_buy"
+            android:text="查影讯/购票"
+            android:textColor="@color/white"
+            android:layout_below="@id/toolbar"/>
         <View
-            android:layout_width="0.5dp"
-            android:layout_height="match_parent"
-            android:background="@color/light_gray">
-        </View>
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:layout_marginLeft="10dp">
-            <TextView
-                android:id="@+id/tv_film_stills_num_02"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="119张图片"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_right_arrow"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"/>
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginRight="10dp"
-                app:placeholderImage="@drawable/img_default"
-                android:layout_below="@id/tv_film_stills_num_02"/>
-        </RelativeLayout>
-
-    </LinearLayout>
-    <View
-        android:id="@+id/film_detail_space_03"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:background="@color/light_gray"
-        android:layout_below="@id/ll_film_detail_stills">
-    </View>
-    <LinearLayout
-        android:id="@+id/ll_film_detail_actors"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/film_detail_space_03"
-        android:padding="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="186位演职人员"
-            android:textSize="16sp"
-            android:layout_weight="1"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/img_right_arrow"/>
-    </LinearLayout>
-    <HorizontalScrollView
-        android:id="@+id/hsv_film_detail_actors"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ll_film_detail_actors"
-        android:padding="5dp">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="导演"
-                android:textSize="12sp"/>
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:layout_width="100dp"
-                android:layout_height="150dp"
-                app:placeholderImage="@drawable/img_default"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="巴巴克"
-                android:textSize="12sp"/>
-        </LinearLayout>
-    </HorizontalScrollView>
-    <View
-        android:id="@+id/film_detail_space_04"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:background="@color/light_gray"
-        android:layout_below="@id/hsv_film_detail_actors">
-    </View>
-    <LinearLayout
-        android:id="@+id/ll_film_detail_news_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/film_detail_space_04"
-        android:padding="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="38条相关新闻"
-            android:textSize="16sp"
-            android:layout_weight="1"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/img_right_arrow"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/ll_film_detail_new_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ll_film_detail_news_title"
-        android:padding="5dp">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="@string/app_name" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name"/>
-        </LinearLayout>
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="100dp"
-            app:placeholderImage="@drawable/img_default"/>
-    </LinearLayout>
-    <View
-        android:id="@+id/film_detail_space_05"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:background="@color/light_gray"
-        android:layout_below="@id/ll_film_detail_new_content">
-    </View>
-    <LinearLayout
-        android:id="@+id/ll_film_detail_comment_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/film_detail_space_05"
-        android:padding="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="47条精选影评"
-            android:textSize="16sp"
-            android:layout_weight="1"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/img_right_arrow"/>
-    </LinearLayout>
-    <TextView
-        android:id="@+id/tv_film_detail_comment_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:padding="5dp"
-        android:layout_below="@id/ll_film_detail_comment_title"/>
-    <TextView
-        android:id="@+id/tv_film_detail_comment_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:padding="5dp"
-        android:layout_below="@id/tv_film_detail_comment_title"
-        android:lines="3"
-        android:ellipsize="end"/>
-
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/sdv_film_detail_avatar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:roundedCornerRadius="25dp"
-        app:placeholderImage="@drawable/img_default"
-        android:layout_below="@id/tv_film_detail_comment_content"/>
-    <LinearLayout
-        android:id="@+id/ll_film_detail_01"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_toRightOf="@id/sdv_film_detail_avatar"
-        android:layout_below="@id/tv_film_detail_comment_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"/>
-        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:background="#B2CE86"
-                android:layout_marginLeft="15dp"/>
-        </LinearLayout>
-    </LinearLayout>
-    <ListView
-        android:id="@+id/lv_film_detail_comment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ll_film_detail_01">
+            android:layout_height="1dp"
+            android:layout_below="@id/btn_film_detail_header_buy">
 
-    </ListView>
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:placeholderImage="@drawable/img_default"
-        android:layout_below="@id/lv_film_detail_comment"/>
-</android.support.percent.PercentRelativeLayout>
-</ScrollView>
+        </View>
+    </RelativeLayout>
+
+</RelativeLayout>

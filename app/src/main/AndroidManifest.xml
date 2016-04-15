@@ -53,7 +53,8 @@
         <activity
             android:name=".activity.HotMovieDetailActivity"
             android:label="@string/title_activity_hot_movie_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
