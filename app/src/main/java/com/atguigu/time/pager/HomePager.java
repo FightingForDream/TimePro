@@ -1,6 +1,7 @@
 package com.atguigu.time.pager;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.atguigu.time.R;
+import com.atguigu.time.activity.HotMovieDetailActivity;
 import com.atguigu.time.adapter.HomeContentAdapter;
 import com.atguigu.time.adapter.HomeGalleryAdapter;
 import com.atguigu.time.adapter.HomeHeaderAdapter;
@@ -38,11 +40,12 @@ import java.util.List;
  * Created by Huanzi on 2016/4/7.
  */
 public class HomePager extends BasePager {
+    /**加载数据进度条*/
     private ProgressBar pb_home_loading;
     /**头部视图*/
     private View headerView;
     /**ListView内容*/
-    private ListView recyler_view_home;
+    private ListView lv_home_content;
     private HomeContentAdapter adapter;
     private HomeContentBean contentBean;
 
@@ -57,12 +60,19 @@ public class HomePager extends BasePager {
     private List<SimpleDraweeView> headerViews;
     private HomeHeaderAdapter viewPagerAdapter;
     private List<HomeHeaderBean.TopPostersBean> posterList;
+    /**搜索按钮*/
+    private TextView tv_home_search;
+
+
+
     /**-----------------------------广告模块----------------------------*/
     /**广告ViewPager*/
     private ViewPager advViewPager;
     private List<HomeHeaderBean.AdvListBean> advList;
     private List<SimpleDraweeView> advViews;
     private HomeHeaderAdapter advAdapter;
+
+
     /**---------------------------电影商城模块--------------------------*/
     /**电影商城数据*/
     private HomeHeaderBean.AreaSecondBean areaSecondBean;
@@ -87,7 +97,10 @@ public class HomePager extends BasePager {
     private SimpleDraweeView sdv_shop_item04;
     private SimpleDraweeView sdv_shop_item05;
     private SimpleDraweeView sdv_shop_item06;
-    /**----------------------------------------------------------------*/
+
+
+    /**--------------------------时光精选模块------------------------------*/
+
 
     /**
      * 构造函数，初始化上下文，调用initView初始化视图
@@ -100,15 +113,22 @@ public class HomePager extends BasePager {
 
     /**
      * 视图组件初始化
-     * @return
+     * @return mRootView ListView内容
      */
     @Override
     public View getView() {
+        //加载ListView内容视图
         mRootView = View.inflate(mActivity, R.layout.pager_home, null);
-        recyler_view_home = (ListView) mRootView.findViewById(R.id.recyler_view_home);
-        pb_home_loading = (ProgressBar) mRootView.findViewById(R.id.pb_home_loading);
-
+        //加载ListView 头部视图
         headerView = View.inflate(mActivity, R.layout.pager_home_header, null);
+        //初始化视图组件
+        findViewById();
+        lv_home_content.addHeaderView(headerView);
+        return mRootView;
+    }
+    public void findViewById(){
+        lv_home_content = (ListView) mRootView.findViewById(R.id.lv_home_content);
+        pb_home_loading = (ProgressBar) mRootView.findViewById(R.id.pb_home_loading);
         //home_gallery = (Gallery) headerView.findViewById(R.id.home_gallery);      //采用HorizontalScrollView替换掉Gallery
         ll_home_gallery = (LinearLayout) headerView.findViewById(R.id.ll_home_gallery);
         //顶部ViewPager
@@ -137,23 +157,40 @@ public class HomePager extends BasePager {
         sdv_shop_item05 = (SimpleDraweeView) headerView.findViewById(R.id.sdv_shop_item05);
         sdv_shop_item06 = (SimpleDraweeView) headerView.findViewById(R.id.sdv_shop_item06);
 
-        recyler_view_home.addHeaderView(headerView);
-        return mRootView;
-    }
+        tv_home_search = (TextView) headerView.findViewById(R.id.tv_home_search);
 
+        tv_home_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+    }
 
     /**
      * 请求数据
      */
     @Override
     public void initData() {
+        //请求时光精选数据
+        getMtimeChosenData();
+        //请求Gallery数据
+        getTicketOnSaleData();
+        //请求Header数据
+        getAdsData();
+    }
+
+    /**
+     * 加载时光精选内容
+     */
+    public void getMtimeChosenData(){
         //请求ListView内容
         StringRequest request = new StringRequest(Request.Method.GET, Url.HOME_CONTENT, new Response.Listener<String>() {
             @Override
             public void onResponse(String str) {
                 contentBean = new Gson().fromJson(str, HomeContentBean.class);
                 adapter = new HomeContentAdapter(mActivity, contentBean);
-                recyler_view_home.setAdapter(adapter);
+                lv_home_content.setAdapter(adapter);
                 Toast.makeText(mActivity, "加载数据成功", Toast.LENGTH_SHORT).show();
                 pb_home_loading.setVisibility(View.GONE);
             }
@@ -165,7 +202,13 @@ public class HomePager extends BasePager {
                 Toast.makeText(mActivity, "加载数据出错！", Toast.LENGTH_SHORT).show();
             }
         });
-        //请求Gallery内容
+        VolleyManager.getInstance(mActivity).getQueue().add(request);
+    }
+
+    /**
+     * 加载正在售票内容
+     */
+    public void getTicketOnSaleData(){
         StringRequest galleryRequest = new StringRequest(Request.Method.GET, Url.HOME_GALLERY, new Response.Listener<String>() {
             @Override
             public void onResponse(String str) {
@@ -209,7 +252,13 @@ public class HomePager extends BasePager {
                 //mActivity.showTips("加载数据出错！");
             }
         });
-        //请求Header内容
+        VolleyManager.getInstance(mActivity).getQueue().add(galleryRequest);
+    }
+
+    /**
+     * 加载广告、卖品数据
+     */
+    public void getAdsData(){
         StringRequest viewPagerRequest = new StringRequest(Request.Method.GET, Url.HOME_HEADER, new Response.Listener<String>() {
             @Override
             public void onResponse(String str) {
@@ -292,13 +341,15 @@ public class HomePager extends BasePager {
                 //mActivity.showTips("加载数据出错！");
             }
         });
-        VolleyManager.getInstance(mActivity).getQueue().add(request);
-        VolleyManager.getInstance(mActivity).getQueue().add(galleryRequest);
         VolleyManager.getInstance(mActivity).getQueue().add(viewPagerRequest);
     }
+
+
     private View.OnClickListener showHotMovieDetailListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            Intent it = new Intent(mActivity, HotMovieDetailActivity.class);
+            mActivity.startActivity(it);
             /*switch (view.getId()){
                 case
             }*/
