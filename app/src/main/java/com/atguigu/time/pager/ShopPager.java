@@ -155,10 +155,9 @@ public class ShopPager extends BasePager implements View.OnClickListener {
     private LinearLayout ll_flash_sale;
 
     private ImageOptions imageOptions = new ImageOptions.Builder()
-            .setSize(DensityUtil.dip2px(120), DensityUtil.dip2px(120))//图片大小
             .setRadius(DensityUtil.dip2px(5))//ImageView圆角半径
             .setCrop(true)// 如果ImageView的大小不是定义为wrap_content, 不要crop.
-            .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+            .setImageScaleType(ImageView.ScaleType.FIT_XY)
             .setLoadingDrawableId(R.drawable.img_default)//加载中默认显示图片
             .setFailureDrawableId(R.drawable.img_default)//加载失败后默认显示图片
             .build();
@@ -297,16 +296,16 @@ public class ShopPager extends BasePager implements View.OnClickListener {
         gv_type.setAdapter(new GridViewAdapter());
 
 
-        x.image().bind(iv_background, topic.get(0).getBackgroupImage());
-        x.image().bind(iv_circle_icon1, topic.get(0).getUncheckImage());
-        x.image().bind(iv_circle_icon2, topic.get(1).getUncheckImage());
-        x.image().bind(iv_circle_icon3, topic.get(2).getUncheckImage());
-        x.image().bind(iv_circle_icon4, topic.get(3).getUncheckImage());
+        x.image().bind(iv_background, topic.get(0).getBackgroupImage(),imageOptions);
+        x.image().bind(iv_circle_icon1, topic.get(0).getUncheckImage(),imageOptions);
+        x.image().bind(iv_circle_icon2, topic.get(1).getUncheckImage(),imageOptions);
+        x.image().bind(iv_circle_icon3, topic.get(2).getUncheckImage(),imageOptions);
+        x.image().bind(iv_circle_icon4, topic.get(3).getUncheckImage(),imageOptions);
 
-        x.image().bind(iv_a, dataBean.getCellA().getImg());
-        x.image().bind(iv_b, dataBean.getCellB().getImg());
-        x.image().bind(iv_c1, dataBean.getCellC().getList().get(0).getImage());
-        x.image().bind(iv_c2, dataBean.getCellC().getList().get(1).getImage());
+        x.image().bind(iv_a, dataBean.getCellA().getImg(),imageOptions);
+        x.image().bind(iv_b, dataBean.getCellB().getImg(),imageOptions);
+        x.image().bind(iv_c1, dataBean.getCellC().getList().get(0).getImage(),imageOptions);
+        x.image().bind(iv_c2, dataBean.getCellC().getList().get(1).getImage(),imageOptions);
 
         showTopicView(mActivity, 1, topic);
 
@@ -384,7 +383,7 @@ public class ShopPager extends BasePager implements View.OnClickListener {
      */
     private void showTopicView(Activity mActivity, int position, List<Mall.TopicBean> topic) {
         mall_no_scroll_grid_view.setAdapter(new MallGridViewAdapter(mActivity, position, topic));
-        x.image().bind(iv_background, topic.get(position).getBackgroupImage());
+        x.image().bind(iv_background, topic.get(position).getBackgroupImage(),imageOptions);
         tv_english_title.setText(topic.get(position).getTitleEn());
         tv_chinese_title.setText(topic.get(position).getTitleCn());
     }
@@ -567,7 +566,7 @@ public class ShopPager extends BasePager implements View.OnClickListener {
 
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             imageView.setLayoutParams(params);
-            x.image().bind(imageView, viewPagers.get(position).getImage());
+            x.image().bind(imageView, viewPagers.get(position).getImage(),imageOptions);
             container.addView(imageView);
 
             final int finalPosition = position;
@@ -707,7 +706,7 @@ public class ShopPager extends BasePager implements View.OnClickListener {
             } else if (alpha < 0) {
                 alpha = 0;
             }
-            ll_background.getBackground().setAlpha(alpha);
+             ll_background.getBackground().setAlpha(alpha);
 
             if (lv_shop_mall.isHeaderShown()) {
                 iv_go_top.setVisibility(View.GONE);
