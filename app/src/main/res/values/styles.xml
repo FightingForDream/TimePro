@@ -36,7 +36,7 @@
 
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
 
-        <item name="tabMaxWidth">@dimen/tab_max_width</item>
+        <item name="tabMaxWidth">90dp</item>
         <item name="tabMinWidth">90dp</item>
         <item name="tabIndicatorColor">#0000FF</item>
         <item name="tabIndicatorHeight">3dp</item>

@@ -1,92 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_store_title_bg"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#FF0000FF"
+    android:gravity="center_vertical"
+    android:padding="5dp">
 
     <ImageView
-        android:id="@+id/black_background"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/title_bar_height"
-        android:background="@mipmap/mall_title" />
-
-    <ImageView
-        android:id="@+id/background"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/title_bar_height"
-        android:background="#ff0075c4" />
-
-    <ImageButton
-        android:id="@+id/iv_mall_home_scan"
+        android:id="@+id/iv_scan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="17dp"
-        android:background="@mipmap/mall_home_scan" />
+        android:layout_marginLeft="10dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/mall_home_scan" />
 
-    <RelativeLayout
-        android:id="@+id/back"
-        android:layout_width="40dp"
-        android:layout_height="49dp"
-        android:layout_alignParentLeft="true"
-        android:clickable="true"
-        android:visibility="invisible">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="17dp"
-            android:background="@mipmap/title_btn_back_background" />
-    </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/iv_mall_home_cart_icon"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tv_search"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="8dp"
-        android:src="@mipmap/mall_home_cart_icon" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="8dp"
-        android:background="@mipmap/mall_filter"
-        android:visibility="invisible" />
-
-    <RelativeLayout
-        android:id="@+id/search_region"
-        android:layout_width="match_parent"
-        android:layout_height="38.5dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="17dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_toLeftOf="@id/iv_mall_home_cart_icon"
-        android:layout_toRightOf="@id/iv_mall_home_scan"
-        android:background="@drawable/title_bar_search_region_background">
+        android:layout_weight="1"
+        android:background="@drawable/mall_shap_title"
+        android:clickable="true"
+        android:drawableLeft="@drawable/title_bar_search_zoomin"
+        android:drawablePadding="5dp"
+        android:editable="false"
+        android:gravity="center_vertical"
+        android:hint="搜索正版电影周边"
+        android:padding="10dp"
+        android:textSize="16sp" />
 
-        <EditText
-            android:id="@+id/search_content"
-            android:layout_width="match_parent"
-            android:layout_height="26dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="3dp"
-            android:background="@null"
-            android:drawableLeft="@mipmap/title_bar_search_zoomin"
-            android:drawablePadding="2dp"
-            android:focusable="false"
-            android:gravity="center|left"
-            android:hint="搜索正版电影周边"
-            android:imeOptions="actionSearch"
-            android:textColor="#ff333333"
-            android:textColorHint="#ffbbbbbb"
-            android:textSize="16sp" />
-    </RelativeLayout>
-</RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_car"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/mall_home_cart_icon" />
+
+</LinearLayout>

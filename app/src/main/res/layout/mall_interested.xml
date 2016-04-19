@@ -44,7 +44,7 @@
 
     <com.atguigu.time.view.NoScrollGridView
         android:id="@+id/interest_grid_view"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -55,11 +55,12 @@
         android:verticalSpacing="10.0dip" />
 
     <TextView
-        android:id="@+id/product_nomore"
+        android:id="@+id/tv_no_more"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
+        android:visibility="gone"
         android:text="貌似没有更多了"
         android:textColor="#ff999999"
         android:textSize="12dp" />

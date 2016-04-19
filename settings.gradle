@@ -1,1 +1,1 @@
-include ':app', ':SMSSDK', ':libzxing'
+include ':app', ':pullToFreshLibrary'

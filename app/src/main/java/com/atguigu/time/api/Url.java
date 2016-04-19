@@ -13,7 +13,9 @@ public class Url {
     public static final String MALL_URL = "http://api.m.mtime.cn/PageSubArea/MarketFirstPageNew.api?lastTime={0}";
 
     //商场感兴趣的更多商品
-    public static final String MALL_MORE_URL = "http://api.m.mtime.cn/ECommerce/RecommendProducts.api?pageIndex=1&goodsIds=";
+
+    public static final String MALL_MORE_URL = "http://api.m.mtime.cn/ECommerce/RecommendProducts.api?pageIndex=1&goodsIds=102314";
+    public static final String MALL_BASE_MORE_URL = "http://api.m.mtime.cn/ECommerce/RecommendProducts.api?pageIndex=";
 
     public static final String HOME_CONTENT = "http://api.m.mtime.cn/PageSubArea/GetHomeFeed.api";
     public static final String HOME_GALLERY = "http://api.m.mtime.cn/PageSubArea/HotPlayMovies.api?locationId=290";
