@@ -1,4 +1,4 @@
-package com.atguigu.time.activity;
+package com.atguigu.time.module_home.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -20,7 +20,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.atguigu.time.R;
-import com.atguigu.time.base.BaseActivity;
+import com.atguigu.time.module_home.activity.base.BaseActivity;
 import com.atguigu.time.view.XScrollView;
 
 public class HotMovieDetailActivity extends BaseActivity implements XScrollView.OnScrollStateChangedListener{

@@ -17,9 +17,14 @@ public class Url {
     public static final String MALL_MORE_URL = "http://api.m.mtime.cn/ECommerce/RecommendProducts.api?pageIndex=1&goodsIds=102314";
     public static final String MALL_BASE_MORE_URL = "http://api.m.mtime.cn/ECommerce/RecommendProducts.api?pageIndex=";
 
+    /*---------------------------------------------首页模块链接地址------------------------------------------*/
+    /**首页ListView内容链接*/
     public static final String HOME_CONTENT = "http://api.m.mtime.cn/PageSubArea/GetHomeFeed.api";
+    /**首页正在售票链接*/
     public static final String HOME_GALLERY = "http://api.m.mtime.cn/PageSubArea/HotPlayMovies.api?locationId=290";
+    /**首页广告链接*/
     public static final String HOME_HEADER = "http://api.m.mtime.cn/PageSubArea/GetFirstPageAdvAndNews.api";
+    /*----------------------------------------------------------------------------------------------*/
 
     //发现页面四个页面顶部数据
     public static final String TOP_Find = "http://api.m.mtime.cn/PageSubArea/GetRecommendationIndexInfo.api";
@@ -28,4 +33,7 @@ public class Url {
 
     //得到城市列表的数据
     public static final String CITY_LIST = "http://api.m.mtime.cn/Showtime/HotCitiesByCinema.api";
+
+    /**-----------------------------------------搜索模块链接地址------------------------------------------*/
+    public static final String SEARCH_URL = "http://api.m.mtime.cn/Search/SearchSuggestionNew.api?keyword=";
 }

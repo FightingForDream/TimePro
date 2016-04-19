@@ -1,15 +1,17 @@
-package com.atguigu.time.pager;
+package com.atguigu.time.module_home.pager;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Button;
-import android.widget.Gallery;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -22,19 +24,22 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.atguigu.time.R;
-import com.atguigu.time.activity.HotMovieDetailActivity;
-import com.atguigu.time.adapter.HomeContentAdapter;
-import com.atguigu.time.adapter.HomeGalleryAdapter;
-import com.atguigu.time.adapter.HomeHeaderAdapter;
+
 import com.atguigu.time.api.Url;
 import com.atguigu.time.api.VolleyManager;
 import com.atguigu.time.base.BasePager;
 import com.atguigu.time.bean.HomeContentBean;
 import com.atguigu.time.bean.HomeHeaderBean;
 import com.atguigu.time.bean.HomeHotMovieBean;
+import com.atguigu.time.module_home.activity.HotMovieDetailActivity;
+import com.atguigu.time.module_home.activity.SearchItemActivity;
+import com.atguigu.time.module_home.activity.base.BaseActivity;
+import com.atguigu.time.module_home.adapter.HomeContentAdapter;
+import com.atguigu.time.module_home.adapter.HomeHeaderAdapter;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +47,8 @@ import java.util.List;
  * Created by Huanzi on 2016/4/7.
  */
 public class HomePager extends BasePager {
+    private static final int START_SCROLL_PAGE = 0;
+    private static final int SCROLL_PAGE_DELAY = 4000;
     /**加载数据进度条*/
     private ProgressBar pb_home_loading;
     /**头部视图*/
@@ -49,9 +56,12 @@ public class HomePager extends BasePager {
     /**---------------------------头部ViewPager-----------------------*/
     private ViewPager home_view_pager;
     private HomeHeaderBean homeHeaderBean;
-    private List<SimpleDraweeView> headerViews;
+    private List<SimpleDraweeView> posterViewList;
     private HomeHeaderAdapter viewPagerAdapter;
     private List<HomeHeaderBean.TopPostersBean> posterList;
+    private LinearLayout ll_home_viewpager_dots;
+    private List<ImageView> dotList;
+    private int currentPage;
     /**搜索按钮*/
     private TextView tv_home_search;
     /**ListView内容*/
@@ -110,6 +120,19 @@ public class HomePager extends BasePager {
     private boolean isLoadingData;
     private ImageView iv_home_footer_loading;
     private TextView tv_home_footer_text;
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case START_SCROLL_PAGE:
+                    //currentPage++;
+                    home_view_pager.setCurrentItem((currentPage + 1) % 5);
+                    mHandler.sendEmptyMessageDelayed(START_SCROLL_PAGE, SCROLL_PAGE_DELAY);
+                    break;
+            }
+        }
+    };
 
     /**
      * 构造函数，初始化上下文，调用initView初始化视图
@@ -178,6 +201,8 @@ public class HomePager extends BasePager {
 
         iv_home_footer_loading = (ImageView) mFooterView.findViewById(R.id.iv_home_footer_loading);
         tv_home_footer_text = (TextView) mFooterView.findViewById(R.id.tv_home_footer_text);
+
+        ll_home_viewpager_dots = (LinearLayout) mHeaderView.findViewById(R.id.ll_home_viewpager_dots);
     }
 
     /**
@@ -188,29 +213,64 @@ public class HomePager extends BasePager {
         tv_home_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent it  = new Intent(mActivity, SearchItemActivity.class);
+                mActivity.startActivity(it);
             }
         });
         //ListView设置滑动监听
         lv_home_content.setOnScrollListener(new AbsListView.OnScrollListener() {
-
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
 
             }
-            //
+
             @Override
             public void onScroll(AbsListView absListView, int i, int i1, int i2) {
                 //Log.e("TAG", "mfooterView.isShown");
-                if (mFooterView.isShown() && !isLoadingData){
+                if (mFooterView.isShown() && !isLoadingData) {
                     pageIndex++;
                     loadMoreData();
                     Log.e("TAG", "mfooterView.isShown");
-                }else{
+                } else {
                     Log.e("TAG", "mfooterView false");
                 }
             }
         });
+
+        //头部ViewPager设置滑动监听
+        home_view_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                dotList.get(position).setEnabled(true);
+                dotList.get(currentPage % 5).setEnabled(false);
+                currentPage = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+       /* //按下取消handler滑动,松开继续滑动
+        home_view_pager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        mHandler.removeMessages(START_SCROLL_PAGE);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        mHandler.sendEmptyMessageDelayed(START_SCROLL_PAGE, SCROLL_PAGE_DELAY);
+                        break;
+                }
+                return false;
+            }
+        });*/
     }
     /**
      * ListView滑动监听
@@ -347,27 +407,29 @@ public class HomePager extends BasePager {
         StringRequest viewPagerRequest = new StringRequest(Request.Method.GET, Url.HOME_HEADER, new Response.Listener<String>() {
             @Override
             public void onResponse(String str) {
-                headerViews = new ArrayList<SimpleDraweeView>();
+                posterViewList = new ArrayList<SimpleDraweeView>();
                 homeHeaderBean = new Gson().fromJson(str, HomeHeaderBean.class);
                 posterList = homeHeaderBean.getTopPosters();
+                /*LinearLayout headerView = (LinearLayout) View.inflate(mActivity, R.layout.home_viewpager_item, null);
                 for (int i = 0; i < posterList.size(); i++){
                     SimpleDraweeView view = (SimpleDraweeView) View.inflate(mActivity, R.layout.home_viewpager_item, null);
 
                     view.setTag(posterList.get(i).getImg());
-                    headerViews.add(view);
+                    headerScrollViews.add(view);
                 }
-                viewPagerAdapter = new HomeHeaderAdapter(mActivity, headerViews);
-                home_view_pager.setAdapter(viewPagerAdapter);
+                viewPagerAdapter = new HomeHeaderAdapter(mActivity, headerScrollViews);
+                home_view_pager.setAdapter(viewPagerAdapter);*/
+                getTopPosterView(posterList);
                 //装配广告数据
                 advList = homeHeaderBean.getAdvList();
                 advViews = new ArrayList<SimpleDraweeView>();
                 for (int i = 0; i < advList.size(); i++){
-                    SimpleDraweeView view = (SimpleDraweeView) View.inflate(mActivity, R.layout.home_viewpager_item, null);
+                    SimpleDraweeView view = (SimpleDraweeView) View.inflate(mActivity, R.layout.home_viewpager_drawee, null);
 
                     view.setTag(advList.get(i).getImg());
                     advViews.add(view);
                 }
-                advAdapter = new HomeHeaderAdapter(mActivity, advViews);
+                advAdapter = new HomeHeaderAdapter(mActivity, advViews, homeHeaderBean);
                 advViewPager.setAdapter(advAdapter);
                 //装配电影商城购物模块
                 areaSecondBean = homeHeaderBean.getAreaSecond();
@@ -429,19 +491,44 @@ public class HomePager extends BasePager {
         VolleyManager.getInstance(mActivity).getQueue().add(viewPagerRequest);
     }
 
+    /**
+     * 生成TopPoster数据
+     */
+    public void getTopPosterView(List<HomeHeaderBean.TopPostersBean> posterList){
+        dotList = new ArrayList<ImageView>();
+        //LinearLayout headerView = (LinearLayout) View.inflate(mActivity, R.layout.home_viewpager_item, null);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.rightMargin = 10;
+        for (int i = 0; i < posterList.size(); i++){
+            SimpleDraweeView sdv = (SimpleDraweeView) View.inflate(mActivity, R.layout.home_viewpager_drawee, null);
+            ImageView dot = (ImageView) View.inflate(mActivity, R.layout.home_viewpager_dot, null);
+            dot.setLayoutParams(params);
+            ll_home_viewpager_dots.addView(dot);
+            dot.setEnabled(false);
+            dotList.add(dot);
+            sdv.setTag(posterList.get(i).getImg());
+            posterViewList.add(sdv);
+        }
+        dotList.get(0).setEnabled(true);
+        viewPagerAdapter = new HomeHeaderAdapter(mActivity, posterViewList, homeHeaderBean);
+        home_view_pager.setAdapter(viewPagerAdapter);
+        setViewPagerAutoScroll();
+    }
+
 
     private View.OnClickListener showHotMovieDetailListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent it = new Intent(mActivity, HotMovieDetailActivity.class);
             mActivity.startActivity(it);
-            /*switch (view.getId()){
-                case
-            }*/
-
         }
     };
     /**
-     * 设置首页ListView数据
+     * 设置ViewPager轮播
      */
+    public void setViewPagerAutoScroll(){
+        Message msg = Message.obtain();
+        msg.what = START_SCROLL_PAGE;
+        mHandler.sendEmptyMessageDelayed(START_SCROLL_PAGE, SCROLL_PAGE_DELAY);
+    }
 }

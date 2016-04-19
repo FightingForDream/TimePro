@@ -17,9 +17,9 @@ import android.widget.RadioGroup;
 
 import com.atguigu.time.base.BasePager;
 import com.atguigu.time.pager.FindPager;
-import com.atguigu.time.pager.HomePager;
+import com.atguigu.time.module_home.pager.HomePager;
 import com.atguigu.time.pager.MinePager;
-import com.atguigu.time.pager.ShopPager;
+//import com.atguigu.time.pager.ShopPager;
 import com.atguigu.time.pager.TicketBuyPager;
 import com.atguigu.time.utils.SpUtils;
 
@@ -54,7 +54,7 @@ public class MainActivity extends FragmentActivity {
         mPagers = new ArrayList<>();
         mPagers.add(new HomePager(this));
         mPagers.add(new TicketBuyPager(this));
-        mPagers.add(new ShopPager(this));
+        //mPagers.add(new ShopPager(this));
         mPagers.add(new FindPager(this));
         mPagers.add(new MinePager(this));
 

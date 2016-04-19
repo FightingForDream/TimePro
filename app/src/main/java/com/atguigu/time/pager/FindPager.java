@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.atguigu.time.R;
-import com.atguigu.time.module_find.base.BaseFindInnerPager;
 import com.atguigu.time.base.BasePager;
+import com.atguigu.time.module_find.base.BaseFindInnerPager;
 import com.atguigu.time.module_find.findinnerpager.News;
 import com.atguigu.time.module_find.findinnerpager.PaiHangBang;
 import com.atguigu.time.module_find.findinnerpager.Prevue;

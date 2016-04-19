@@ -1,4 +1,4 @@
-package com.atguigu.time.module_home;
+package com.atguigu.time.module_home.adapter;
 
 import android.net.Uri;
 import android.view.View;

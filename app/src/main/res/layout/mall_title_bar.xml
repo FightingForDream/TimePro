@@ -22,7 +22,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_weight="1"
-        android:background="@drawable/mall_shap_title"
         android:clickable="true"
         android:drawableLeft="@drawable/title_bar_search_zoomin"
         android:drawablePadding="5dp"
