@@ -1,14 +1,14 @@
 package com.atguigu.time.base;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import org.xutils.x;
 
 /**
  * Created by wyouflf on 15/11/4.
  */
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

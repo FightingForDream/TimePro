@@ -13,7 +13,6 @@
             android:id="@+id/iv_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/cinema_post_header_background"
             android:scaleType="centerCrop" />
 
         <HorizontalScrollView
@@ -73,7 +72,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Star Wars"
         android:textSize="15sp" />
 
     <TextView
@@ -82,7 +80,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="星球大战"
         android:textSize="20sp" />
     <com.atguigu.time.view.NoScrollGridView
         android:id="@+id/mall_no_scroll_grid_view"

@@ -13,7 +13,4 @@
         android:clickable="false"
         android:visibility="gone"
         android:src="@drawable/loading_failed" />
-
-
-
 </RelativeLayout>

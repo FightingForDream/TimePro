@@ -104,7 +104,7 @@ public class SplashActivity extends Activity {
             double longitude = location.getLongitude();//获取经度
             //http://api.m.mtime.cn/GetCityByLongitudelatitude.api?longitude=116.386641&latitude=40.105512&cityName=
 
-            RequestParams params = new RequestParams(Url.GET_CITY + "longitude=" + longitude + "&latitude=" + latitude+"&cityName=");
+            RequestParams params = new RequestParams(Url.GET_CITY + "longitude=" + longitude + "&latitude=" + latitude + "&cityName=");
             x.http().get(params, new Callback.CommonCallback<String>() {
                 @Override
                 public void onSuccess(String result) {

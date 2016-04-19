@@ -10,6 +10,7 @@ import com.atguigu.time.R;
 
 /**
  * Created by SkyWalker on 2016/4/9.
+ * 引导页面的adapter
  */
 public class GuideAdapter extends PagerAdapter {
 

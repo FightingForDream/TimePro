@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PullToRefresh-library/PullToRefresh-library.iml" filepath="$PROJECT_DIR$/PullToRefresh-library/PullToRefresh-library.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Scrollstripview/Scrollstripview.iml" filepath="$PROJECT_DIR$/Scrollstripview/Scrollstripview.iml" />
       <module fileurl="file://$PROJECT_DIR$/TimePro.iml" filepath="$PROJECT_DIR$/TimePro.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/xUtils3-sample/xUtils3-sample.iml" filepath="$PROJECT_DIR$/xUtils3-sample/xUtils3-sample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/xutils_library/xutils_library.iml" filepath="$PROJECT_DIR$/xutils_library/xutils_library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pullToFreshLibrary/pullToFreshLibrary.iml" filepath="$PROJECT_DIR$/pullToFreshLibrary/pullToFreshLibrary.iml" />
     </modules>
   </component>
 </project>
