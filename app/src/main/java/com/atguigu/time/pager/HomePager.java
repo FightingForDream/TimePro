@@ -6,9 +6,11 @@ import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -43,7 +45,15 @@ public class HomePager extends BasePager {
     /**加载数据进度条*/
     private ProgressBar pb_home_loading;
     /**头部视图*/
-    private View headerView;
+    private View mHeaderView;
+    /**---------------------------头部ViewPager-----------------------*/
+    private ViewPager home_view_pager;
+    private HomeHeaderBean homeHeaderBean;
+    private List<SimpleDraweeView> headerViews;
+    private HomeHeaderAdapter viewPagerAdapter;
+    private List<HomeHeaderBean.TopPostersBean> posterList;
+    /**搜索按钮*/
+    private TextView tv_home_search;
     /**ListView内容*/
     private ListView lv_home_content;
     private HomeContentAdapter adapter;
@@ -54,15 +64,6 @@ public class HomePager extends BasePager {
     private HomeHotMovieBean hotMovieBean;
 
     private LinearLayout ll_home_gallery;
-    /**头部ViewPager*/
-    private ViewPager home_view_pager;
-    private HomeHeaderBean homeHeaderBean;
-    private List<SimpleDraweeView> headerViews;
-    private HomeHeaderAdapter viewPagerAdapter;
-    private List<HomeHeaderBean.TopPostersBean> posterList;
-    /**搜索按钮*/
-    private TextView tv_home_search;
-
 
 
     /**-----------------------------广告模块----------------------------*/
@@ -73,7 +74,7 @@ public class HomePager extends BasePager {
     private HomeHeaderAdapter advAdapter;
 
 
-    /**---------------------------电影商城模块--------------------------*/
+    /*---------------------------电影商城模块--------------------------*/
     /**电影商城数据*/
     private HomeHeaderBean.AreaSecondBean areaSecondBean;
     /**电影商城标题组件*/
@@ -99,8 +100,16 @@ public class HomePager extends BasePager {
     private SimpleDraweeView sdv_shop_item06;
 
 
-    /**--------------------------时光精选模块------------------------------*/
+    /*--------------------------时光精选模块------------------------------*/
+    private int pageIndex;
+    /*private HomeContentBean.DataBean moreDataBean;*/
 
+
+    /*--------------------------底部刷新模块------------------------------*/
+    private View mFooterView;
+    private boolean isLoadingData;
+    private ImageView iv_home_footer_loading;
+    private TextView tv_home_footer_text;
 
     /**
      * 构造函数，初始化上下文，调用initView初始化视图
@@ -120,53 +129,93 @@ public class HomePager extends BasePager {
         //加载ListView内容视图
         mRootView = View.inflate(mActivity, R.layout.pager_home, null);
         //加载ListView 头部视图
-        headerView = View.inflate(mActivity, R.layout.pager_home_header, null);
+        mHeaderView = View.inflate(mActivity, R.layout.pager_home_header, null);
+        //加载底部下拉刷新视图
+        mFooterView = View.inflate(mActivity, R.layout.page_home_footer, null);
         //初始化视图组件
         findViewById();
-        lv_home_content.addHeaderView(headerView);
+        //设置监听
+        setListener();
+        //添加头部
+        lv_home_content.addHeaderView(mHeaderView);
+        //添加底部
+        lv_home_content.addFooterView(mFooterView);
+
         return mRootView;
     }
     public void findViewById(){
         lv_home_content = (ListView) mRootView.findViewById(R.id.lv_home_content);
         pb_home_loading = (ProgressBar) mRootView.findViewById(R.id.pb_home_loading);
         //home_gallery = (Gallery) headerView.findViewById(R.id.home_gallery);      //采用HorizontalScrollView替换掉Gallery
-        ll_home_gallery = (LinearLayout) headerView.findViewById(R.id.ll_home_gallery);
+        ll_home_gallery = (LinearLayout) mHeaderView.findViewById(R.id.ll_home_gallery);
         //顶部ViewPager
-        home_view_pager = (ViewPager) headerView.findViewById(R.id.home_view_pager);
+        home_view_pager = (ViewPager) mHeaderView.findViewById(R.id.home_view_pager);
         //广告ViewPager
-        advViewPager = (ViewPager) headerView.findViewById(R.id.vp_home_adv);
+        advViewPager = (ViewPager) mHeaderView.findViewById(R.id.vp_home_adv);
         //购物商城组件初始化
-        tv_shop_title01 = (TextView) headerView.findViewById(R.id.tv_shop_title01);
-        tv_shop_title02 = (TextView) headerView.findViewById(R.id.tv_shop_title02);
-        tv_shop_title03 = (TextView) headerView.findViewById(R.id.tv_shop_title03);
-        tv_shop_title04 = (TextView) headerView.findViewById(R.id.tv_shop_title04);
-        tv_shop_title05 = (TextView) headerView.findViewById(R.id.tv_shop_title05);
-        tv_shop_title06 = (TextView) headerView.findViewById(R.id.tv_shop_title06);
+        tv_shop_title01 = (TextView) mHeaderView.findViewById(R.id.tv_shop_title01);
+        tv_shop_title02 = (TextView) mHeaderView.findViewById(R.id.tv_shop_title02);
+        tv_shop_title03 = (TextView) mHeaderView.findViewById(R.id.tv_shop_title03);
+        tv_shop_title04 = (TextView) mHeaderView.findViewById(R.id.tv_shop_title04);
+        tv_shop_title05 = (TextView) mHeaderView.findViewById(R.id.tv_shop_title05);
+        tv_shop_title06 = (TextView) mHeaderView.findViewById(R.id.tv_shop_title06);
 
-        tv_shop_item01 = (TextView) headerView.findViewById(R.id.tv_shop_item01);
-        tv_shop_item02 = (TextView) headerView.findViewById(R.id.tv_shop_item02);
-        tv_shop_item03 = (TextView) headerView.findViewById(R.id.tv_shop_item03);
-        tv_shop_item04 = (TextView) headerView.findViewById(R.id.tv_shop_item04);
-        tv_shop_item05 = (TextView) headerView.findViewById(R.id.tv_shop_item05);
-        tv_shop_item06 = (TextView) headerView.findViewById(R.id.tv_shop_item06);
+        tv_shop_item01 = (TextView) mHeaderView.findViewById(R.id.tv_shop_item01);
+        tv_shop_item02 = (TextView) mHeaderView.findViewById(R.id.tv_shop_item02);
+        tv_shop_item03 = (TextView) mHeaderView.findViewById(R.id.tv_shop_item03);
+        tv_shop_item04 = (TextView) mHeaderView.findViewById(R.id.tv_shop_item04);
+        tv_shop_item05 = (TextView) mHeaderView.findViewById(R.id.tv_shop_item05);
+        tv_shop_item06 = (TextView) mHeaderView.findViewById(R.id.tv_shop_item06);
 
-        sdv_shop_item01 = (SimpleDraweeView) headerView.findViewById(R.id.sdv_shop_item01);
-        sdv_shop_item02 = (SimpleDraweeView) headerView.findViewById(R.id.sdv_shop_item02);
-        sdv_shop_item03 = (SimpleDraweeView) headerView.findViewById(R.id.sdv_shop_item03);
-        sdv_shop_item04 = (SimpleDraweeView) headerView.findViewById(R.id.sdv_shop_item04);
-        sdv_shop_item05 = (SimpleDraweeView) headerView.findViewById(R.id.sdv_shop_item05);
-        sdv_shop_item06 = (SimpleDraweeView) headerView.findViewById(R.id.sdv_shop_item06);
+        sdv_shop_item01 = (SimpleDraweeView) mHeaderView.findViewById(R.id.sdv_shop_item01);
+        sdv_shop_item02 = (SimpleDraweeView) mHeaderView.findViewById(R.id.sdv_shop_item02);
+        sdv_shop_item03 = (SimpleDraweeView) mHeaderView.findViewById(R.id.sdv_shop_item03);
+        sdv_shop_item04 = (SimpleDraweeView) mHeaderView.findViewById(R.id.sdv_shop_item04);
+        sdv_shop_item05 = (SimpleDraweeView) mHeaderView.findViewById(R.id.sdv_shop_item05);
+        sdv_shop_item06 = (SimpleDraweeView) mHeaderView.findViewById(R.id.sdv_shop_item06);
 
-        tv_home_search = (TextView) headerView.findViewById(R.id.tv_home_search);
+        tv_home_search = (TextView) mHeaderView.findViewById(R.id.tv_home_search);
 
+        iv_home_footer_loading = (ImageView) mFooterView.findViewById(R.id.iv_home_footer_loading);
+        tv_home_footer_text = (TextView) mFooterView.findViewById(R.id.tv_home_footer_text);
+    }
+
+    /**
+     * 设置监听
+     */
+    public void setListener(){
+        //搜索按钮设置监听
         tv_home_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
             }
         });
-    }
+        //ListView设置滑动监听
+        lv_home_content.setOnScrollListener(new AbsListView.OnScrollListener() {
 
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+            //
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+                //Log.e("TAG", "mfooterView.isShown");
+                if (mFooterView.isShown() && !isLoadingData){
+                    pageIndex++;
+                    loadMoreData();
+                    Log.e("TAG", "mfooterView.isShown");
+                }else{
+                    Log.e("TAG", "mfooterView false");
+                }
+            }
+        });
+    }
+    /**
+     * ListView滑动监听
+     */
+    //private AbsListView.OnScrollListener scrollChangeListener =
     /**
      * 请求数据
      */
@@ -178,6 +227,42 @@ public class HomePager extends BasePager {
         getTicketOnSaleData();
         //请求Header数据
         getAdsData();
+    }
+
+    /**
+     * 下拉加载更多数据
+     */
+    public void loadMoreData(){
+        isLoadingData = true;
+        if (pageIndex == 0 || pageIndex > 3){
+            Toast.makeText(mActivity, "已经到尾了...", Toast.LENGTH_SHORT).show();
+            iv_home_footer_loading.setImageResource(R.drawable.actor_detail_like_base);
+            tv_home_footer_text.setText("木有数据了");
+            return;
+        }
+        String url = Url.HOME_CONTENT + "?pageIndex=" + pageIndex;
+        //请求ListView内容
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String str) {
+                HomeContentBean data = new Gson().fromJson(str, HomeContentBean.class);
+                contentBean.getData().addAll(data.getData());
+                adapter.notifyDataSetChanged();
+                //adapter = new HomeContentAdapter(mActivity, contentBean);
+                //lv_home_content.setAdapter(adapter);
+                Toast.makeText(mActivity, "加载数据成功", Toast.LENGTH_SHORT).show();
+                //pb_home_loading.setVisibility(View.GONE);
+                isLoadingData = false;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                //mActivity.showTips("加载数据出错！");
+                Log.e("ERROR", volleyError.getMessage());
+                Toast.makeText(mActivity, "加载数据出错！", Toast.LENGTH_SHORT).show();
+            }
+        });
+        VolleyManager.getInstance(mActivity).getQueue().add(request);
     }
 
     /**
@@ -359,5 +444,4 @@ public class HomePager extends BasePager {
     /**
      * 设置首页ListView数据
      */
-
 }

@@ -18,4 +18,6 @@ public class Url {
     public static final String HOME_CONTENT = "http://api.m.mtime.cn/PageSubArea/GetHomeFeed.api";
     public static final String HOME_GALLERY = "http://api.m.mtime.cn/PageSubArea/HotPlayMovies.api?locationId=290";
     public static final String HOME_HEADER = "http://api.m.mtime.cn/PageSubArea/GetFirstPageAdvAndNews.api";
+
+    //public static final String HOME_LOAD_MORE = "http://api.m.mtime.cn/PageSubArea/GetHomeFeed.api?pageIndex=2";
 }

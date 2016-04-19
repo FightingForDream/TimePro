@@ -252,7 +252,7 @@ public class HomeContentAdapter extends BaseAdapter{
         holder.sdv_yingping_avatar.setImageURI(Uri.parse(dataList.get(position).getUserImage()));
         holder.tv_yingping_username.setText(dataList.get(position).getNickname() + "-评");
         holder.tv_yingping_film.setText("《" + dataList.get(position).getRelatedObj().getTitle() + "》");
-        holder.tv_yingping_rate.setText(dataList.get(position).getRelatedObj().getRating() + ".0");
+        holder.tv_yingping_rate.setText(dataList.get(position).getRelatedObj().getRating() + "");
 
         holder.sdv_yingping_thumbnail.setImageURI(Uri.parse(dataList.get(position).getRelatedObj().getImage()));
     }

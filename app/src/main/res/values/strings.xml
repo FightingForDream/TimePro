@@ -19,4 +19,5 @@
     <string name="want_to_watch">我想看</string>
     <string name="give_a_mark">我要评分</string>
     <string name="test_text">在子View的onInterceptTouchEvent或者onTouch中(一般在MontionEvent.ACTION_MOVE事件里)，调用该方法通知父View滑动的距离。该方法的第三第四个参数返回父view消费掉的scroll长度和子View的窗体偏移量。如果这个scroll没有被消费完，则子view进行处理剩下的一些距离，由于窗体进行了移动，如果你记录了手指最后的位置，需要根据第四个参数offsetInWindow计算偏移量，才能保证下一次的touch事件的计算是正确的。</string>
+    <string name="loading">努力加载ing...</string>
 </resources>

@@ -46,16 +46,17 @@
                 android:layout_marginTop="10dp">
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/sdv_yingping_avatar"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    fresco:roundedCornerRadius="15dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    fresco:roundedCornerRadius="10dp"
                     fresco:placeholderImage="@drawable/profile_default_head_h90"/>
                 <TextView
                     android:id="@+id/tv_yingping_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/app_name"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="3dp"
+                    android:textSize="12sp"
                     android:layout_gravity="center_vertical"/>
                 <TextView
                     android:id="@+id/tv_yingping_film"
@@ -63,7 +64,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/app_name"
                     android:textColor="@color/dark"
-                    android:layout_marginLeft="5dp"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="3dp"
                     android:layout_gravity="center_vertical"/>
                 <TextView
                     android:id="@+id/tv_yingping_rate"
@@ -72,7 +74,7 @@
                     android:text="@string/app_name"
                     android:background="#659D0E"
                     android:layout_marginLeft="5dp"
-                    android:padding="3dp"
+                    android:textSize="12sp"
                     android:layout_gravity="center_vertical"/>
             </LinearLayout>
 
@@ -80,7 +82,7 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/sdv_yingping_thumbnail"
-            android:layout_width="100dp"
+            android:layout_width="90dp"
             android:layout_height="120dp"
             fresco:placeholderImage="@drawable/img_default" />
     </LinearLayout>
