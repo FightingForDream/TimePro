@@ -1,14 +1,18 @@
 package com.atguigu.time.pager;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,6 +24,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.atguigu.time.R;
+import com.atguigu.time.activity.MallViewPagerDetailActivity;
 import com.atguigu.time.adapter.MallGridViewAdapter;
 import com.atguigu.time.api.Url;
 import com.atguigu.time.api_net.VolleyManager;
@@ -29,6 +34,7 @@ import com.atguigu.time.bean.Mall;
 import com.atguigu.time.module_mall.adapter.MallListAdapter;
 import com.atguigu.time.utils.CacheUtils;
 import com.atguigu.time.view.CircleImageView;
+import com.atguigu.time.view.HorizontalScrollViewPager;
 import com.atguigu.time.view.NoScrollGridView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
@@ -39,20 +45,30 @@ import org.xutils.common.util.DensityUtil;
 import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 商城页面
  */
-public class ShopPager extends BasePager {
+public class ShopPager extends BasePager implements View.OnClickListener {
 
     private static final int AUTO = 1;
+    private static final int UPDATETIME = 2;
     //主布局 包含titleBar和listView
     private RelativeLayout shopView;
+    //正在加载的动画显示
+    private ImageView iv_mall_loading;
+    //正在加载的帧动画
+    private AnimationDrawable animationDrawable;
+    //动画背景
+    private FrameLayout fl_mall_loading_animation;
+    private FrameLayout fl_mall_loading_failed;
     //搜索框
     private TextView tv_search;
     //背景
-    private ImageView background;
+    private LinearLayout ll_background;
     //下拉刷新页面
     private PullToRefreshGridView srl_shop_mall;
     //主布局
@@ -62,9 +78,11 @@ public class ShopPager extends BasePager {
     //购物车
     private ImageView iv_car;
     //顶部ViewPager
-    private ViewPager vp_mall;
+    private HorizontalScrollViewPager vp_mall;
     //圆点
     private LinearLayout ll_mall_view_pager_points;
+    //圆点集合
+    private ArrayList<ImageView> points;
     //ListView
     private PullToRefreshListView lv_shop_mall;
     //商城页面的json数据
@@ -82,10 +100,14 @@ public class ShopPager extends BasePager {
     //商城页面listView的adapter
     private MallListAdapter mallListAdapter;
     //回到顶部
-    private ImageView iv_go_top;
+    private Button iv_go_top;
     //商城页面的特惠  原创设计
     private LinearLayout ll_abc;
     private ImageView iv_a, iv_b, iv_c1, iv_c2;
+    //倒计时
+    private TextView tv_sale_hour;
+    private TextView tv_sale_minute;
+    private TextView tv_sale_mill;
     //功夫熊猫 星战圆形图片
     private HorizontalScrollView view_mall_topic_scroll;
     private LinearLayout ll_mall_circle_icon;
@@ -117,11 +139,20 @@ public class ShopPager extends BasePager {
     private boolean prepareBaseData;
     //上拉加载没有更多
     private TextView tv_no_more;
-
     //标识是否已经发送轮播图自动播放的消息
     private boolean isAuto;
     //标识头部的ViewPager是否是拖拽引起的状态改变
     private boolean isDragging;
+    //表示当前请求的页数
+    private int currentPager = 2;
+    //标识是否滑动
+    private boolean scrollFlag = false;
+    //viewpager滑动时原来的下标
+    private int currentPos = 0;
+    //倒计时时间
+    private long updateTime;
+    //显示倒计时的视图
+    private LinearLayout ll_flash_sale;
 
     private ImageOptions imageOptions = new ImageOptions.Builder()
             .setSize(DensityUtil.dip2px(120), DensityUtil.dip2px(120))//图片大小
@@ -131,6 +162,7 @@ public class ShopPager extends BasePager {
             .setLoadingDrawableId(R.drawable.img_default)//加载中默认显示图片
             .setFailureDrawableId(R.drawable.img_default)//加载失败后默认显示图片
             .build();
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -142,6 +174,9 @@ public class ShopPager extends BasePager {
                     handler.removeMessages(AUTO);
                     handler.sendEmptyMessageDelayed(AUTO, 3000);
                     break;
+                case UPDATETIME:
+                    updateCountDownTime();
+                    handler.sendEmptyMessageDelayed(UPDATETIME,1000);
                 default:
                     break;
             }
@@ -165,6 +200,18 @@ public class ShopPager extends BasePager {
         iv_scan = (ImageView) shopView.findViewById(R.id.iv_scan);
         tv_search = (TextView) shopView.findViewById(R.id.tv_search);
         iv_car = (ImageView) shopView.findViewById(R.id.iv_car);
+        ll_background = (LinearLayout) shopView.findViewById(R.id.ll_background);
+        iv_go_top = (Button) shopView.findViewById(R.id.iv_go_top);
+        ll_background.getBackground().setAlpha(0);
+
+        iv_mall_loading = (ImageView) shopView.findViewById(R.id.iv_mall_loading);
+        iv_mall_loading.setImageResource(R.drawable.loading_animation_list);
+        fl_mall_loading_animation = (FrameLayout) shopView.findViewById(R.id.fl_mall_loading_animation);
+        fl_mall_loading_failed = (FrameLayout) shopView.findViewById(R.id.fl_mall_loading_failed);
+        animationDrawable = (AnimationDrawable) iv_mall_loading.getDrawable();
+        fl_mall_loading_animation.setVisibility(View.VISIBLE);
+        fl_mall_loading_failed.setVisibility(View.GONE);
+        animationDrawable.start();
         x.view().inject(this, shopView);
         return shopView;
     }
@@ -175,6 +222,7 @@ public class ShopPager extends BasePager {
         super.initData();
         mallUrl = Url.MALL_URL;
         mallMoreUrl = Url.MALL_MORE_URL;
+
         value = CacheUtils.getString(mActivity, mallUrl);
 //        if (!TextUtils.isEmpty(value)) {
 //            processData(value);
@@ -200,10 +248,15 @@ public class ShopPager extends BasePager {
                         prepareBaseData = true;
                     }
                 }
+                animationDrawable.stop();
+                fl_mall_loading_animation.setVisibility(View.GONE);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                animationDrawable.stop();
+                fl_mall_loading_animation.setVisibility(View.GONE);
+                fl_mall_loading_failed.setVisibility(View.VISIBLE);
                 Toast.makeText(mActivity, "请检查网络！", Toast.LENGTH_SHORT).show();
             }
         });
@@ -234,10 +287,15 @@ public class ShopPager extends BasePager {
         viewPagers = dataBean.getScrollImg();
         icons = dataBean.getNavigatorIcon();
         topic = dataBean.getTopic();
+        updateCountDownTime();
 
         vp_mall.setAdapter(new ViewPagerAdapter());
+        //设置初始显示的下标
+        int item = Integer.MAX_VALUE / 2 - Integer.MAX_VALUE / 2 % viewPagers.size();
+        vp_mall.setCurrentItem(item);
+        setPoint();
         gv_type.setAdapter(new GridViewAdapter());
-        vp_mall.addOnPageChangeListener(new OnPageChangeListener());
+
 
         x.image().bind(iv_background, topic.get(0).getBackgroupImage());
         x.image().bind(iv_circle_icon1, topic.get(0).getUncheckImage());
@@ -263,6 +321,61 @@ public class ShopPager extends BasePager {
     }
 
     /**
+     * 更新倒计时的时间显示
+     */
+    private void updateCountDownTime() {
+        new Thread(){
+            public void run(){
+                long time=dataBean.getCellA().getLongTime();
+                long millis = System.currentTimeMillis();
+                updateTime=time-millis;
+                if(updateTime==0) {
+                    ll_flash_sale.setVisibility(View.INVISIBLE);
+                    return;
+                }
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String format = simpleDateFormat.format(updateTime);
+
+                String[] split = format.split(" ");
+                String times = split[1];
+                final String[] split1 = times.split(":");
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        tv_sale_hour.setText(split1[0]);
+                        tv_sale_minute.setText(split1[1]);
+                        tv_sale_mill.setText(split1[2]);
+                    }
+                });
+                handler.sendEmptyMessageDelayed(UPDATETIME,1000);
+            }
+        }.start();
+    }
+
+    /**
+     * 添加轮播图的点
+     */
+    private void setPoint() {
+        ll_mall_view_pager_points.removeAllViews();
+        points = new ArrayList<>();
+        List<Mall.ScrollImgBean> scrollImg = dataBean.getScrollImg();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                DensityUtil.dip2px(8), DensityUtil.dip2px(8));
+        params.leftMargin = DensityUtil.dip2px(5);
+        params.rightMargin = DensityUtil.dip2px(5);
+        for (int i = 0; i < scrollImg.size(); i++) {
+            ImageView point = new ImageView(mActivity);
+            point.setImageResource(R.drawable.mall_view_pager_point);
+            points.add(point);
+            point.setLayoutParams(params);
+            ll_mall_view_pager_points.addView(point);//添加到容器中
+        }
+        //默认第一个高亮
+        points.get(0).setEnabled(false);
+    }
+
+    /**
      * 点击圆形图片显示响应效果的方法
      *
      * @param mActivity
@@ -281,22 +394,28 @@ public class ShopPager extends BasePager {
      */
     private void showUI() {
         View topView = View.inflate(mActivity, R.layout.shop_mall_layout, null);
+
         lv_shop_mall.getRefreshableView().addHeaderView(topView);
 
         View footView = View.inflate(mActivity, R.layout.mall_interested, null);
         interest_grid_view = (NoScrollGridView) footView.findViewById(R.id.interest_grid_view);
-        tv_no_more= (TextView) footView.findViewById(R.id.tv_no_more);
+        tv_no_more = (TextView) footView.findViewById(R.id.tv_no_more);
         lv_shop_mall.getRefreshableView().addFooterView(footView);
 
-        vp_mall = (ViewPager) topView.findViewById(R.id.vp_mall);
+        vp_mall = (HorizontalScrollViewPager) topView.findViewById(R.id.vp_mall);
         ll_mall_view_pager_points = (LinearLayout) topView.findViewById(R.id.ll_mall_view_pager_points);
 
         lv_shop_mall.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
         gv_type = (NoScrollGridView) topView.findViewById(R.id.gv_type);
-        iv_go_top = (ImageView) topView.findViewById(R.id.iv_go_top);
 
         ll_abc = (LinearLayout) topView.findViewById(R.id.ll_abc);
         iv_a = (ImageView) topView.findViewById(R.id.iv_a);
+        ll_flash_sale= (LinearLayout) topView.findViewById(R.id.ll_flash_sale);
+        tv_sale_hour= (TextView) topView.findViewById(R.id.tv_sale_hour);
+        tv_sale_minute= (TextView) topView.findViewById(R.id.tv_sale_minute);
+        tv_sale_mill= (TextView) topView.findViewById(R.id.tv_sale_mill);
+        
+
         iv_b = (ImageView) topView.findViewById(R.id.iv_b);
         iv_c1 = (ImageView) topView.findViewById(R.id.iv_c1);
         iv_c2 = (ImageView) topView.findViewById(R.id.iv_c2);
@@ -335,6 +454,20 @@ public class ShopPager extends BasePager {
         }
 
         lv_shop_mall.setOnRefreshListener(new refreshListener());
+        lv_shop_mall.setOnScrollListener(new onScrollListener());
+        vp_mall.addOnPageChangeListener(new OnPageChangeListener());
+
+        iv_go_top.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_go_top:
+                lv_shop_mall.getRefreshableView().setSelection(0);
+                lv_shop_mall.setVisibility(View.GONE);
+                break;
+        }
     }
 
 
@@ -347,6 +480,10 @@ public class ShopPager extends BasePager {
 
         @Override
         public void onPageSelected(int position) {
+            position = position % viewPagers.size();
+            points.get(position).setEnabled(false);
+            points.get(currentPos).setEnabled(true);
+            currentPos = position;
 
         }
 
@@ -355,9 +492,13 @@ public class ShopPager extends BasePager {
             if (state == ViewPager.SCROLL_STATE_DRAGGING) {
                 handler.removeMessages(AUTO);
                 isDragging = true;
-            } else {
-                isDragging = false;
-                handler.sendEmptyMessageDelayed(AUTO, 3000);
+                handler.removeCallbacksAndMessages(null);
+            } else if (state == ViewPager.SCROLL_STATE_IDLE) {
+                //自动翻页有停留 不能一直发消息
+                if (isDragging) {
+                    handler.sendEmptyMessageDelayed(2, 3000);
+                    isDragging = false;
+                }
             }
         }
     }
@@ -411,7 +552,7 @@ public class ShopPager extends BasePager {
 
         @Override
         public int getCount() {
-            return viewPagers.size();
+            return Integer.MAX_VALUE;
         }
 
         @Override
@@ -422,8 +563,23 @@ public class ShopPager extends BasePager {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             ImageView imageView = new ImageView(mActivity);
+            position = position % viewPagers.size();
+
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            imageView.setLayoutParams(params);
             x.image().bind(imageView, viewPagers.get(position).getImage());
             container.addView(imageView);
+
+            final int finalPosition = position;
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String url = viewPagers.get(finalPosition).getUrl();
+                    Intent intent = new Intent(mActivity, MallViewPagerDetailActivity.class);
+                    intent.putExtra("webViewUrl", url);
+                    mActivity.startActivity(intent);
+                }
+            });
             return imageView;
         }
 
@@ -470,15 +626,12 @@ public class ShopPager extends BasePager {
             ImageLoader.getInstance().displayImage(goods.get(position).getImage(), holder.iv_item_shop_icon);
 
             holder.tv_item_tag.setText(goods.get(position).getIconText());
-            Log.e("TAG", "goods.get(position).getIconText()" + goods.get(position).getIconText());
             holder.tv_item_shop_name.setText(goods.get(position).getName());
             holder.tv_item_shop_price.setText("￥" + price / 100);
             return convertView;
         }
     }
 
-    //表示当前请求的页数
-    private int currentPager = 2;
 
     private class refreshListener implements PullToRefreshBase.OnRefreshListener2<ListView> {
         @Override
@@ -489,7 +642,7 @@ public class ShopPager extends BasePager {
         public void onPullUpToRefresh(final PullToRefreshBase<ListView> refreshView) {
             //请求的页
             int pager = shopBean.getPageCount();
-            if (pager >=currentPager) {
+            if (pager >= currentPager) {
                 String url = getUrl(currentPager);
                 VolleyManager.newInstance().GsonGetRequest(null, url, InterestedShopBean.class, new Response.Listener<InterestedShopBean>() {
                     @Override
@@ -523,5 +676,44 @@ public class ShopPager extends BasePager {
      */
     private String getUrl(int currentPager) {
         return Url.MALL_BASE_MORE_URL + currentPager + "&goodsIds=102314";
+    }
+
+    private class onScrollListener implements android.widget.AbsListView.OnScrollListener {
+
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+            switch (scrollState) {
+                case onScrollListener.SCROLL_STATE_IDLE:
+                    scrollFlag = false;
+                    break;
+                case onScrollListener.SCROLL_STATE_TOUCH_SCROLL:
+                    scrollFlag = true;
+                    break;
+                case onScrollListener.SCROLL_STATE_FLING:
+                    scrollFlag = false;
+                    break;
+            }
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            //获取在整个屏幕内的绝对坐标，注意这个值是要从屏幕顶端算起，也就是包括了通知栏的高度。
+            int[] location = new int[2];
+            vp_mall.getLocationOnScreen(location);
+            int height = location[1] - 50;
+            int alpha = Math.abs(height * 3);
+            if (alpha > 255) {
+                alpha = 255;
+            } else if (alpha < 0) {
+                alpha = 0;
+            }
+            ll_background.getBackground().setAlpha(alpha);
+
+            if (lv_shop_mall.isHeaderShown()) {
+                iv_go_top.setVisibility(View.GONE);
+            } else {
+                iv_go_top.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }

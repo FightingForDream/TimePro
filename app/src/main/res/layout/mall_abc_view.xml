@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="225dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/ll_abc"
         android:layout_width="match_parent"
-        android:layout_height="225dp"
+        android:layout_height="250dp"
         android:background="#FFFFFF">
 
         <RelativeLayout
@@ -22,29 +22,74 @@
                 android:contentDescription="@string/app_name"
                 android:minWidth="225dp"
                 android:scaleType="centerCrop" />
-
-            <TextView
-                android:id="@+id/tv_a_title"
-                android:layout_width="156dp"
+            <LinearLayout
+                android:id="@+id/ll_flash_sale"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:textSize="18sp" />
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="17dp"
+                android:orientation="vertical"
+                android:visibility="visible">
 
-            <TextView
-                android:id="@+id/tv_a_sub_title"
-                android:layout_width="168.0dip"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_a_title"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="7dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:scaleType="fitXY"
-                android:textColor="#ff777777"
-                android:textSize="13sp" />
+                <TextView
+                    android:id="@+id/tv_flash_sale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ff777777"
+                    android:textSize="13sp"
+                    android:text="距结束"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp">
+
+                    <TextView
+                        android:padding="5dp"
+                        android:id="@+id/tv_sale_hour"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginRight="2dp"
+                        android:background="@drawable/flashsale"
+                        android:text="00"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="2dp"
+                        android:text=":"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:padding="5dp"
+                        android:id="@+id/tv_sale_minute"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginRight="2dp"
+                        android:background="@drawable/flashsale"
+                        android:text="00"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="2dp"
+                        android:text=":"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/tv_sale_mill"
+                        android:padding="5dp"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginRight="2dp"
+                        android:background="@drawable/flashsale"
+                        android:text="00"
+                        android:textColor="#FFFFFF" />
+                </LinearLayout>
+            </LinearLayout>
+
 
         </RelativeLayout>
 
@@ -70,28 +115,6 @@
                     android:contentDescription="@string/app_name"
                     android:minHeight="112.5dp"
                     android:scaleType="centerCrop" />
-
-                <TextView
-                    android:id="@+id/tv_c1_title"
-                    android:layout_width="84.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/c1_sub_title"
-                    android:layout_width="64.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_c1_title"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="7dp"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:textColor="#ff777777"
-                    android:textSize="13sp" />
             </RelativeLayout>
 
             <View
@@ -110,28 +133,6 @@
                     android:contentDescription="@string/app_name"
                     android:minHeight="112.5dp"
                     android:scaleType="centerCrop" />
-
-                <TextView
-                    android:id="@+id/tv_c2_title"
-                    android:layout_width="84.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="15dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/c2_sub_title"
-                    android:layout_width="64.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_c2_title"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="7dp"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:textColor="#ff777777"
-                    android:textSize="13sp" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
@@ -147,7 +148,7 @@
         <ImageView
             android:id="@+id/iv_b"
             android:layout_width="match_parent"
-            android:layout_height="121dp"
+            android:layout_height="125dp"
             android:background="#FFFFFF"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop" />
@@ -161,81 +162,7 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:textSize="18sp" />
-        <TextView
-            android:id="@+id/b_sub_title"
-            android:layout_width="116dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_b_title"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="7dp"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:textColor="#ff777777"
-            android:textSize="13sp" />
-        <LinearLayout
-            android:id="@+id/ll_flash_sale"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="17dp"
-            android:orientation="vertical"
-            android:visibility="gone">
 
-            <TextView
-                android:id="@+id/tv_flash_sale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#ff777777"
-                android:textSize="13sp"
-                android:text="距离结束"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp">
-
-                <Button
-                    android:id="@+id/bt_flash_sale_hour"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
-                    android:background="@drawable/flashsale"
-                    android:text="00"
-                    android:textColor="#FFFFFF" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
-                    android:text=":"
-                    android:textSize="14sp" />
-
-                <Button
-                    android:id="@+id/bt_flash_sale_minute"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
-                    android:background="@drawable/flashsale"
-                    android:text="00"
-                    android:textColor="#FFFFFF" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
-                    android:text=":"
-                    android:textSize="14sp" />
-                <Button
-                    android:id="@+id/bt_flash_sale_mill"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
-                    android:background="@drawable/flashsale"
-                    android:text="00"
-                    android:textColor="#FFFFFF" />
-            </LinearLayout>
-        </LinearLayout>
     </RelativeLayout>
     <ImageView
         android:layout_width="match_parent"
