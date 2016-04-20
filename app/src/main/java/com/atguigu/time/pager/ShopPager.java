@@ -155,10 +155,10 @@ public class ShopPager extends BasePager implements View.OnClickListener {
     private LinearLayout ll_flash_sale;
 
     private ImageOptions imageOptions = new ImageOptions.Builder()
-            .setSize(DensityUtil.dip2px(120), DensityUtil.dip2px(120))//图片大小
+
             .setRadius(DensityUtil.dip2px(5))//ImageView圆角半径
             .setCrop(true)// 如果ImageView的大小不是定义为wrap_content, 不要crop.
-            .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+            .setImageScaleType(ImageView.ScaleType.FIT_XY)
             .setLoadingDrawableId(R.drawable.img_default)//加载中默认显示图片
             .setFailureDrawableId(R.drawable.img_default)//加载失败后默认显示图片
             .build();
@@ -175,8 +175,8 @@ public class ShopPager extends BasePager implements View.OnClickListener {
                     handler.sendEmptyMessageDelayed(AUTO, 3000);
                     break;
                 case UPDATETIME:
+                    handler.removeCallbacksAndMessages(null);
                     updateCountDownTime();
-                    handler.sendEmptyMessageDelayed(UPDATETIME,1000);
                 default:
                     break;
             }
@@ -296,17 +296,16 @@ public class ShopPager extends BasePager implements View.OnClickListener {
         setPoint();
         gv_type.setAdapter(new GridViewAdapter());
 
+        x.image().bind(iv_background, topic.get(0).getBackgroupImage(), imageOptions);
+        x.image().bind(iv_circle_icon1, topic.get(0).getUncheckImage(), imageOptions);
+        x.image().bind(iv_circle_icon2, topic.get(1).getUncheckImage(), imageOptions);
+        x.image().bind(iv_circle_icon3, topic.get(2).getUncheckImage(), imageOptions);
+        x.image().bind(iv_circle_icon4, topic.get(3).getUncheckImage(), imageOptions);
 
-        x.image().bind(iv_background, topic.get(0).getBackgroupImage());
-        x.image().bind(iv_circle_icon1, topic.get(0).getUncheckImage());
-        x.image().bind(iv_circle_icon2, topic.get(1).getUncheckImage());
-        x.image().bind(iv_circle_icon3, topic.get(2).getUncheckImage());
-        x.image().bind(iv_circle_icon4, topic.get(3).getUncheckImage());
-
-        x.image().bind(iv_a, dataBean.getCellA().getImg());
-        x.image().bind(iv_b, dataBean.getCellB().getImg());
-        x.image().bind(iv_c1, dataBean.getCellC().getList().get(0).getImage());
-        x.image().bind(iv_c2, dataBean.getCellC().getList().get(1).getImage());
+        x.image().bind(iv_a, dataBean.getCellA().getImg(), imageOptions);
+        x.image().bind(iv_b, dataBean.getCellB().getImg(), imageOptions);
+        x.image().bind(iv_c1, dataBean.getCellC().getList().get(0).getImage(), imageOptions);
+        x.image().bind(iv_c2, dataBean.getCellC().getList().get(1).getImage(), imageOptions);
 
         showTopicView(mActivity, 1, topic);
 
@@ -324,33 +323,31 @@ public class ShopPager extends BasePager implements View.OnClickListener {
      * 更新倒计时的时间显示
      */
     private void updateCountDownTime() {
-        new Thread(){
-            public void run(){
-                long time=dataBean.getCellA().getLongTime();
-                long millis = System.currentTimeMillis();
-                updateTime=time-millis;
-                if(updateTime==0) {
+
+        long time = dataBean.getCellA().getLongTime();
+        long millis = System.currentTimeMillis();
+        updateTime = time - millis;
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String format = simpleDateFormat.format(updateTime);
+
+        String[] split = format.split(" ");
+        String times = split[1];
+        final String[] split1 = times.split(":");
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (updateTime == 0) {
                     ll_flash_sale.setVisibility(View.INVISIBLE);
                     return;
                 }
-                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String format = simpleDateFormat.format(updateTime);
-
-                String[] split = format.split(" ");
-                String times = split[1];
-                final String[] split1 = times.split(":");
-
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        tv_sale_hour.setText(split1[0]);
-                        tv_sale_minute.setText(split1[1]);
-                        tv_sale_mill.setText(split1[2]);
-                    }
-                });
-                handler.sendEmptyMessageDelayed(UPDATETIME,1000);
+                tv_sale_hour.setText(split1[0]);
+                tv_sale_minute.setText(split1[1]);
+                tv_sale_mill.setText(split1[2]);
             }
-        }.start();
+        });
+        handler.sendEmptyMessageDelayed(UPDATETIME, 1000);
     }
 
     /**
@@ -384,7 +381,7 @@ public class ShopPager extends BasePager implements View.OnClickListener {
      */
     private void showTopicView(Activity mActivity, int position, List<Mall.TopicBean> topic) {
         mall_no_scroll_grid_view.setAdapter(new MallGridViewAdapter(mActivity, position, topic));
-        x.image().bind(iv_background, topic.get(position).getBackgroupImage());
+        x.image().bind(iv_background, topic.get(position).getBackgroupImage(), imageOptions);
         tv_english_title.setText(topic.get(position).getTitleEn());
         tv_chinese_title.setText(topic.get(position).getTitleCn());
     }
@@ -410,11 +407,11 @@ public class ShopPager extends BasePager implements View.OnClickListener {
 
         ll_abc = (LinearLayout) topView.findViewById(R.id.ll_abc);
         iv_a = (ImageView) topView.findViewById(R.id.iv_a);
-        ll_flash_sale= (LinearLayout) topView.findViewById(R.id.ll_flash_sale);
-        tv_sale_hour= (TextView) topView.findViewById(R.id.tv_sale_hour);
-        tv_sale_minute= (TextView) topView.findViewById(R.id.tv_sale_minute);
-        tv_sale_mill= (TextView) topView.findViewById(R.id.tv_sale_mill);
-        
+        ll_flash_sale = (LinearLayout) topView.findViewById(R.id.ll_flash_sale);
+        tv_sale_hour = (TextView) topView.findViewById(R.id.tv_sale_hour);
+        tv_sale_minute = (TextView) topView.findViewById(R.id.tv_sale_minute);
+        tv_sale_mill = (TextView) topView.findViewById(R.id.tv_sale_mill);
+
 
         iv_b = (ImageView) topView.findViewById(R.id.iv_b);
         iv_c1 = (ImageView) topView.findViewById(R.id.iv_c1);
@@ -567,7 +564,7 @@ public class ShopPager extends BasePager implements View.OnClickListener {
 
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             imageView.setLayoutParams(params);
-            x.image().bind(imageView, viewPagers.get(position).getImage());
+            x.image().bind(imageView, viewPagers.get(position).getImage(), imageOptions);
             container.addView(imageView);
 
             final int finalPosition = position;
