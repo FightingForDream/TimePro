@@ -50,12 +50,8 @@
         <activity android:name=".module_mine.UserLoginActivity" />
         <activity android:name=".module_mine.UserRegistActivity" />
         <activity android:name=".module_tickey.activity.HotMovieActivity" />
-        <activity android:name=".module_home.activity.TopPosterActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
-        <activity android:name=".module_home.activity.SearchItemActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+        <activity android:name=".activity.ShopDetailActivity" />
+        <activity android:name=".activity.MallViewPagerDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -1,1 +1,1 @@
-include ':PullToRefresh-library', ':app', ':SMSSDK',':libzxing'
+include ':app', ':pullToFreshLibrary', ':libzxing', ':SMSSDK'

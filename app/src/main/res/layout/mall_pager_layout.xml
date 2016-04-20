@@ -3,13 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
    >
+    <include layout="@layout/mall_loading_animation"/>
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/lv_shop_mall"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="#EEF0F0F0"
-        android:dividerHeight="10dp"
         />
+
+    <Button
+        android:id="@+id/iv_go_top"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="6dp"
+        android:layout_marginRight="6dp"
+        android:background="@drawable/gotop"
+        android:visibility="gone"
+        android:gravity="center"/>
     <include layout="@layout/mall_title_bar" />
 </RelativeLayout>
