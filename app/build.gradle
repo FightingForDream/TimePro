@@ -44,4 +44,5 @@ dependencies {
     compile files('libs/universal-image-loader-1.9.2-SNAPSHOT-with-sources.jar')
     compile project(':libzxing')
     compile project(':SMSSDK')
+    compile 'com.android.support:percent:23.1.1'
 }

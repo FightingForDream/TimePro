@@ -114,7 +114,7 @@ public class HomeContentAdapter extends BaseAdapter{
                 }else {
                     jianXunHolder = (JianXunHolder) convertView.getTag();
                 }
-                setJianxunData(jianXunHolder, position, type, dataType);
+                setJianxunData(jianXunHolder, position, type, dataType, dataList.get(position).getTag());
                 break;
             case TYPE_CAI_DIAN_YING:
                 if(convertView == null) {
@@ -184,13 +184,14 @@ public class HomeContentAdapter extends BaseAdapter{
         return convertView;
     }
 
-    public void setJianxunData(JianXunHolder holder, int position, int type, int dataType) {
+    public void setJianxunData(JianXunHolder holder, int position, int type, int dataType, String tag) {
         holder.tv_jianxun_tag.setText(dataList.get(position).getTag());   //设置类型，如简讯
         holder.tv_jianxun_title.setText(dataList.get(position).getTitle());   //设置标题
         holder.tv_jianxun_subtitle.setText(dataList.get(position).getContent());  //设置内容
         holder.tv_jianxun_comment.setText("评论" + dataList.get(position).getCommentCount()); //设置评论数
 
-        if (dataType == TU_JI){
+        //if (dataType == TU_JI){
+        if ("图集".equals(tag)){
             //holder.rl_jianxun_container.setVisibility(View.VISIBLE);
             holder.sdv_tuji_01.setVisibility(View.VISIBLE);
             holder.sdv_tuji_02.setVisibility(View.VISIBLE);
@@ -198,11 +199,24 @@ public class HomeContentAdapter extends BaseAdapter{
             holder.sdv_tuji_04.setVisibility(View.GONE);
             holder.sdv_jianxun_thumbnail.setVisibility(View.GONE);
             holder.tv_jianxun_time.setText(dataList.get(position).getPublishTime() + "");  //设置发布时间
-            holder.sdv_tuji_01.setImageURI(Uri.parse(dataList.get(position).getImages().get(1).getUrl1()));
-            holder.sdv_tuji_02.setImageURI(Uri.parse(dataList.get(position).getImages().get(2).getUrl1()));
-            holder.sdv_tuji_03.setImageURI(Uri.parse(dataList.get(position).getImages().get(3).getUrl1()));
+            String url1 = dataList.get(position).getImages().get(0).getUrl1();
+            String url2 = dataList.get(position).getImages().get(1).getUrl1();
+            String url3 = dataList.get(position).getImages().get(2).getUrl1();
+            if(url1 != null){
+                holder.sdv_tuji_01.setImageURI(Uri.parse(url1));
+            }
+            if(url2 != null){
+                holder.sdv_tuji_01.setImageURI(Uri.parse(url2));
+            }
+            if(url3 != null){
+                holder.sdv_tuji_01.setImageURI(Uri.parse(url3));
+            }
 
-        }else if(dataType == TOU_TIAO){
+            //holder.sdv_tuji_02.setImageURI(Uri.parse(dataList.get(position).getImages().get(2).getUrl1()));
+            //holder.sdv_tuji_03.setImageURI(Uri.parse(dataList.get(position).getImages().get(3).getUrl1()));
+
+        //}else if(dataType == TOU_TIAO){
+        }else if("头条".equals(tag)){
             //holder.rl_jianxun_container.setVisibility(View.VISIBLE);
             holder.sdv_tuji_01.setVisibility(View.GONE);
             holder.sdv_tuji_02.setVisibility(View.GONE);

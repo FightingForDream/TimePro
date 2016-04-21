@@ -51,7 +51,20 @@
         <activity android:name=".module_mine.UserRegistActivity" />
         <activity android:name=".module_tickey.activity.HotMovieActivity" />
         <activity android:name=".activity.ShopDetailActivity" />
-        <activity android:name=".activity.MallViewPagerDetailActivity"></activity>
+        <activity android:name=".activity.MallViewPagerDetailActivity" />
+        <activity
+            android:name=".module_home.activity.SearchItemActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".module_home.activity.HotMovieDetailActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".module_home.activity.TopPosterActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".module_home.activity.ChooseCityActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

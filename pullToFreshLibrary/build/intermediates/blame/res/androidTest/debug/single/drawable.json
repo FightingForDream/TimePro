@@ -1,5 +1,9 @@
 [
     {
+        "merged": "D:\\Workspaces\\TimePro\\pullToFreshLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\indicator_bg_bottom.xml",
+        "source": "D:\\Workspaces\\TimePro\\pullToFreshLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable\\indicator_bg_bottom.xml"
+    },
+    {
         "merged": "E:\\WorkSpace\\TimePro\\pullToFreshLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\progress_pull.xml",
         "source": "E:\\WorkSpace\\TimePro\\pullToFreshLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable\\progress_pull.xml"
     },
@@ -8,11 +12,23 @@
         "source": "E:\\WorkSpace\\TimePro\\pullToFreshLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable\\indicator_bg_top.xml"
     },
     {
-        "merged": "E:\\WorkSpace\\TimePro\\pullToFreshLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\mall_shap_title.xml",
-        "source": "E:\\WorkSpace\\TimePro\\pullToFreshLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable\\mall_shap_title.xml"
+        "merged": "D:\\Workspaces\\TimePro\\pullToFreshLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\indicator_bg_top.xml",
+        "source": "D:\\Workspaces\\TimePro\\pullToFreshLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable\\indicator_bg_top.xml"
+    },
+    {
+        "merged": "D:\\Workspaces\\TimePro\\pullToFreshLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\progress_pull.xml",
+        "source": "D:\\Workspaces\\TimePro\\pullToFreshLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable\\progress_pull.xml"
+    },
+    {
+        "merged": "D:\\Workspaces\\TimePro\\pullToFreshLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\mall_shap_title.xml",
+        "source": "D:\\Workspaces\\TimePro\\pullToFreshLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable\\mall_shap_title.xml"
     },
     {
         "merged": "E:\\WorkSpace\\TimePro\\pullToFreshLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\indicator_bg_bottom.xml",
         "source": "E:\\WorkSpace\\TimePro\\pullToFreshLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable\\indicator_bg_bottom.xml"
+    },
+    {
+        "merged": "E:\\WorkSpace\\TimePro\\pullToFreshLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\mall_shap_title.xml",
+        "source": "E:\\WorkSpace\\TimePro\\pullToFreshLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable\\mall_shap_title.xml"
     }
 ]

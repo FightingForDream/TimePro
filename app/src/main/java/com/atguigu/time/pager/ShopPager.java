@@ -165,6 +165,11 @@ public class ShopPager extends BasePager implements View.OnClickListener {
 
     private Handler handler = new Handler() {
         @Override
+        public String toString() {
+            return super.toString();
+        }
+
+        @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
@@ -675,7 +680,7 @@ public class ShopPager extends BasePager implements View.OnClickListener {
         return Url.MALL_BASE_MORE_URL + currentPager + "&goodsIds=102314";
     }
 
-    private class onScrollListener implements android.widget.AbsListView.OnScrollListener {
+    private class onScrollListener implements AbsListView.OnScrollListener {
 
         @Override
         public void onScrollStateChanged(AbsListView view, int scrollState) {

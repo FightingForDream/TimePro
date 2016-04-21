@@ -31,6 +31,7 @@ import com.atguigu.time.base.BasePager;
 import com.atguigu.time.bean.HomeContentBean;
 import com.atguigu.time.bean.HomeHeaderBean;
 import com.atguigu.time.bean.HomeHotMovieBean;
+import com.atguigu.time.module_home.activity.ChooseCityActivity;
 import com.atguigu.time.module_home.activity.HotMovieDetailActivity;
 import com.atguigu.time.module_home.activity.SearchItemActivity;
 import com.atguigu.time.module_home.activity.base.BaseActivity;
@@ -121,6 +122,9 @@ public class HomePager extends BasePager {
     private ImageView iv_home_footer_loading;
     private TextView tv_home_footer_text;
 
+    /**选择城市*/
+    private TextView tv_home_location;
+
     private Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -163,7 +167,6 @@ public class HomePager extends BasePager {
         lv_home_content.addHeaderView(mHeaderView);
         //添加底部
         lv_home_content.addFooterView(mFooterView);
-
         return mRootView;
     }
     public void findViewById(){
@@ -203,6 +206,9 @@ public class HomePager extends BasePager {
         tv_home_footer_text = (TextView) mFooterView.findViewById(R.id.tv_home_footer_text);
 
         ll_home_viewpager_dots = (LinearLayout) mHeaderView.findViewById(R.id.ll_home_viewpager_dots);
+
+        //初始化城市选择TextView
+        tv_home_location = (TextView) mHeaderView.findViewById(R.id.tv_home_location);
     }
 
     /**
@@ -223,7 +229,6 @@ public class HomePager extends BasePager {
             public void onScrollStateChanged(AbsListView absListView, int i) {
 
             }
-
             @Override
             public void onScroll(AbsListView absListView, int i, int i1, int i2) {
                 //Log.e("TAG", "mfooterView.isShown");
@@ -256,21 +261,15 @@ public class HomePager extends BasePager {
 
             }
         });
-       /* //按下取消handler滑动,松开继续滑动
-        home_view_pager.setOnTouchListener(new View.OnTouchListener() {
+
+        //设置城市位置点击监听
+        tv_home_location.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        mHandler.removeMessages(START_SCROLL_PAGE);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        mHandler.sendEmptyMessageDelayed(START_SCROLL_PAGE, SCROLL_PAGE_DELAY);
-                        break;
-                }
-                return false;
+            public void onClick(View view) {
+                Intent it = new Intent(mActivity, ChooseCityActivity.class);
+                mActivity.startActivity(it);
             }
-        });*/
+        });
     }
     /**
      * ListView滑动监听
@@ -318,7 +317,7 @@ public class HomePager extends BasePager {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 //mActivity.showTips("加载数据出错！");
-                Log.e("ERROR", volleyError.getMessage());
+                //Log.e("ERROR", volleyError.getMessage());
                 Toast.makeText(mActivity, "加载数据出错！", Toast.LENGTH_SHORT).show();
             }
         });
@@ -343,7 +342,7 @@ public class HomePager extends BasePager {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 //mActivity.showTips("加载数据出错！");
-                Log.e("ERROR", volleyError.getMessage());
+                //Log.e("ERROR", volleyError.getMessage());
                 Toast.makeText(mActivity, "加载数据出错！", Toast.LENGTH_SHORT).show();
             }
         });
@@ -387,7 +386,15 @@ public class HomePager extends BasePager {
                     }
 
                     ll_home_gallery.addView(view);
-                    view.setOnClickListener(showHotMovieDetailListener);
+                    view.setTag(hotMovieBean.getMovies().get(i).getMovieId());
+                    view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent it  = new Intent(mActivity, HotMovieDetailActivity.class);
+                            it.putExtra("movie_id", (int)view.getTag());
+                            mActivity.startActivity(it);
+                        }
+                    });
                 }
 
             }

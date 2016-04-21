@@ -5,4 +5,5 @@ package com.atguigu.time.utils;
  */
 public interface Constants {
     String POSTER_URL = "poster_url";
+    String CITY_LIST_FILENAME = "cityJson";
 }
